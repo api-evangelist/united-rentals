@@ -1,0 +1,60 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "ur": "https://schema.unitedrentals.com/",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+
+    "Equipment": {
+      "@id": "ur:Equipment",
+      "@type": "@id",
+      "subClassOf": "schema:Product"
+    },
+    "equipmentId": { "@id": "ur:equipmentId", "@type": "xsd:string" },
+    "name": { "@id": "schema:name", "@type": "xsd:string" },
+    "category": { "@id": "schema:category", "@type": "xsd:string" },
+    "manufacturer": { "@id": "schema:manufacturer", "@type": "@id" },
+    "model": { "@id": "schema:model", "@type": "xsd:string" },
+    "specifications": { "@id": "ur:specifications", "@type": "@id" },
+    "dailyRate": { "@id": "ur:dailyRate", "@type": "xsd:decimal" },
+    "weeklyRate": { "@id": "ur:weeklyRate", "@type": "xsd:decimal" },
+    "monthlyRate": { "@id": "ur:monthlyRate", "@type": "xsd:decimal" },
+    "available": { "@id": "schema:availability", "@type": "xsd:boolean" },
+
+    "RentalOrder": {
+      "@id": "ur:RentalOrder",
+      "@type": "@id",
+      "subClassOf": "schema:Order"
+    },
+    "rentalId": { "@id": "ur:rentalId", "@type": "xsd:string" },
+    "status": { "@id": "ur:status", "@type": "xsd:string" },
+    "startDate": { "@id": "schema:startDate", "@type": "xsd:date" },
+    "endDate": { "@id": "schema:endDate", "@type": "xsd:date" },
+    "returnDate": { "@id": "ur:returnDate", "@type": "xsd:date" },
+    "jobSite": { "@id": "ur:jobSite", "@type": "xsd:string" },
+    "deliveryAddress": { "@id": "schema:deliveryAddress", "@type": "@id" },
+    "purchaseOrderNumber": { "@id": "ur:purchaseOrderNumber", "@type": "xsd:string" },
+    "totalCost": { "@id": "schema:totalPrice", "@type": "xsd:decimal" },
+    "branchId": { "@id": "ur:branchId", "@type": "xsd:string" },
+
+    "Invoice": {
+      "@id": "ur:Invoice",
+      "@type": "@id",
+      "subClassOf": "schema:Invoice"
+    },
+    "invoiceId": { "@id": "ur:invoiceId", "@type": "xsd:string" },
+    "invoiceNumber": { "@id": "schema:confirmationNumber", "@type": "xsd:string" },
+    "issueDate": { "@id": "ur:issueDate", "@type": "xsd:date" },
+    "dueDate": { "@id": "ur:dueDate", "@type": "xsd:date" },
+    "subtotal": { "@id": "ur:subtotal", "@type": "xsd:decimal" },
+    "tax": { "@id": "ur:taxAmount", "@type": "xsd:decimal" },
+    "totalAmount": { "@id": "schema:totalPrice", "@type": "xsd:decimal" },
+    "lineItems": { "@id": "ur:hasLineItem", "@type": "@id", "@container": "@list" },
+
+    "Branch": {
+      "@id": "ur:Branch",
+      "@type": "@id",
+      "subClassOf": "schema:LocalBusiness"
+    }
+  }
+}

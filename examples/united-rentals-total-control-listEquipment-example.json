@@ -1,0 +1,67 @@
+{
+  "request": {
+    "method": "GET",
+    "path": "/v1/equipment",
+    "headers": {
+      "X-API-Key": "ur_sk_prod_abc123xyz"
+    },
+    "query": {
+      "category": "aerial",
+      "available": true,
+      "branchId": "BR-1042",
+      "page": 1,
+      "pageSize": 10
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "equipment": [
+        {
+          "equipmentId": "EQ-450182",
+          "name": "40 ft Straight Boom Lift",
+          "category": "aerial",
+          "type": "Boom Lift",
+          "manufacturer": "JLG",
+          "model": "400S",
+          "specifications": {
+            "maxWorkHeight": "46 ft",
+            "platformCapacity": "500 lbs",
+            "drive": "4WD",
+            "powerSource": "diesel"
+          },
+          "dailyRate": 325.00,
+          "weeklyRate": 975.00,
+          "monthlyRate": 2925.00,
+          "available": true,
+          "nearestBranch": "BR-1042"
+        },
+        {
+          "equipmentId": "EQ-391004",
+          "name": "60 ft Articulating Boom Lift",
+          "category": "aerial",
+          "type": "Boom Lift",
+          "manufacturer": "Genie",
+          "model": "Z-60/37",
+          "specifications": {
+            "maxWorkHeight": "66 ft",
+            "platformCapacity": "660 lbs",
+            "drive": "4WD",
+            "powerSource": "diesel"
+          },
+          "dailyRate": 450.00,
+          "weeklyRate": 1350.00,
+          "monthlyRate": 4050.00,
+          "available": true,
+          "nearestBranch": "BR-1042"
+        }
+      ],
+      "total": 24,
+      "page": 1,
+      "pageSize": 10
+    }
+  }
+}

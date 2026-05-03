@@ -1,0 +1,33 @@
+{
+  "name": "United Rentals Rental Order",
+  "description": "Structure of a United Rentals equipment rental order for procure-to-pay integration.",
+  "fields": [
+    { "name": "rentalId", "type": "string", "required": true, "description": "Rental order identifier" },
+    { "name": "status", "type": "enum", "required": true, "values": ["pending", "active", "returned", "cancelled"] },
+    {
+      "name": "equipment",
+      "type": "object",
+      "required": true,
+      "fields": [
+        { "name": "equipmentId", "type": "string", "required": true },
+        { "name": "name", "type": "string", "required": true },
+        { "name": "category", "type": "string", "required": true, "description": "aerial, earthmoving, power, etc." },
+        { "name": "type", "type": "string", "required": false },
+        { "name": "manufacturer", "type": "string", "required": false },
+        { "name": "model", "type": "string", "required": false },
+        { "name": "dailyRate", "type": "number", "required": false, "description": "USD per day" },
+        { "name": "weeklyRate", "type": "number", "required": false, "description": "USD per week" },
+        { "name": "monthlyRate", "type": "number", "required": false, "description": "USD per month" }
+      ]
+    },
+    { "name": "startDate", "type": "date", "required": true, "description": "Rental start date (YYYY-MM-DD)" },
+    { "name": "endDate", "type": "date", "required": true, "description": "Scheduled return date (YYYY-MM-DD)" },
+    { "name": "returnDate", "type": "date", "required": false, "description": "Actual return date" },
+    { "name": "jobSite", "type": "string", "required": true, "description": "Job site or project name" },
+    { "name": "deliveryAddress", "type": "string", "required": false },
+    { "name": "purchaseOrderNumber", "type": "string", "required": true, "description": "Customer PO for ERP integration" },
+    { "name": "totalCost", "type": "number", "required": false, "description": "Total cost in USD" },
+    { "name": "branchId", "type": "string", "required": false },
+    { "name": "createdAt", "type": "datetime", "required": false }
+  ]
+}

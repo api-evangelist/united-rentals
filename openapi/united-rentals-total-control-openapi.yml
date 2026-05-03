@@ -1,0 +1,772 @@
+openapi: 3.1.0
+info:
+  title: United Rentals Total Control API
+  description: >-
+    United Rentals provides a broad selection of APIs to simplify the procure-to-pay
+    lifecycle for equipment rentals. The Total Control platform enables integration
+    with customer procurement and ERP systems via EDI, cXML, JSON, and flat-file
+    formats. Capabilities include punch-out catalog ordering, rental reservations,
+    fleet management, invoice management, and automated PO/bill pay workflows.
+    United Rentals is the world's largest equipment rental company.
+  version: 1.0.0
+  contact:
+    name: United Rentals Integration Team
+    url: https://www.unitedrentals.com/services/online-services/total-control/system-integration
+  termsOfService: https://www.unitedrentals.com
+servers:
+  - url: https://api.unitedrentals.com/v1
+    description: United Rentals Production API
+tags:
+  - name: Equipment
+    description: Equipment catalog and availability
+  - name: Rentals
+    description: Rental reservations and orders
+  - name: Fleet
+    description: Fleet and worksite management
+  - name: Invoices
+    description: Invoice and billing management
+  - name: Locations
+    description: Branch locations and service areas
+paths:
+  /equipment:
+    get:
+      operationId: listEquipment
+      summary: List Equipment
+      description: >-
+        Browse the United Rentals equipment catalog. Returns available equipment
+        by category, type, and location for punch-out catalog integration.
+      tags:
+        - Equipment
+      parameters:
+        - name: category
+          in: query
+          schema:
+            type: string
+          description: Equipment category (e.g., aerial, earthmoving, power)
+        - name: type
+          in: query
+          schema:
+            type: string
+          description: Equipment type filter
+        - name: branchId
+          in: query
+          schema:
+            type: string
+          description: Filter by nearest branch location
+        - name: available
+          in: query
+          schema:
+            type: boolean
+            default: true
+          description: Filter for available equipment only
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: pageSize
+          in: query
+          schema:
+            type: integer
+            default: 50
+      responses:
+        '200':
+          description: Equipment list returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EquipmentListResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+        - ApiKeyAuth: []
+  /equipment/{equipmentId}:
+    get:
+      operationId: getEquipment
+      summary: Get Equipment Details
+      description: Retrieve details for a specific piece of equipment including availability and pricing.
+      tags:
+        - Equipment
+      parameters:
+        - name: equipmentId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: United Rentals equipment identifier
+      responses:
+        '200':
+          description: Equipment details returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Equipment'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+        - ApiKeyAuth: []
+  /equipment/{equipmentId}/availability:
+    get:
+      operationId: checkEquipmentAvailability
+      summary: Check Equipment Availability
+      description: Check availability of equipment for a specific date range and branch location.
+      tags:
+        - Equipment
+      parameters:
+        - name: equipmentId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: startDate
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+          description: Rental start date
+        - name: endDate
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+          description: Rental end date
+        - name: branchId
+          in: query
+          schema:
+            type: string
+          description: Preferred branch location
+      responses:
+        '200':
+          description: Availability status returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AvailabilityResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+        - ApiKeyAuth: []
+  /rentals:
+    post:
+      operationId: createRental
+      summary: Create Rental Reservation
+      description: >-
+        Create a new rental reservation order. Supports integration with customer
+        procurement systems via purchase order. Processes ordering from within
+        the customer's ERP environment through punch-out workflow.
+      tags:
+        - Rentals
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RentalRequest'
+      responses:
+        '201':
+          description: Rental reservation created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Rental'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+        - ApiKeyAuth: []
+    get:
+      operationId: listRentals
+      summary: List Rentals
+      description: Retrieve rental orders for the account. Supports fleet tracking and management.
+      tags:
+        - Rentals
+      parameters:
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [pending, active, returned, cancelled]
+          description: Filter by rental status
+        - name: startDate
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: endDate
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: jobSite
+          in: query
+          schema:
+            type: string
+          description: Filter by job site or project
+      responses:
+        '200':
+          description: Rentals list returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Rental'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+        - ApiKeyAuth: []
+  /rentals/{rentalId}:
+    get:
+      operationId: getRental
+      summary: Get Rental Details
+      description: Retrieve details for a specific rental order.
+      tags:
+        - Rentals
+      parameters:
+        - name: rentalId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Rental order identifier
+      responses:
+        '200':
+          description: Rental details returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Rental'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+        - ApiKeyAuth: []
+  /rentals/{rentalId}/extend:
+    post:
+      operationId: extendRental
+      summary: Extend Rental
+      description: Extend the duration of an active rental.
+      tags:
+        - Rentals
+      parameters:
+        - name: rentalId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RentalExtensionRequest'
+      responses:
+        '200':
+          description: Rental extended successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Rental'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+        - ApiKeyAuth: []
+  /rentals/{rentalId}/return:
+    post:
+      operationId: returnRental
+      summary: Return Rental
+      description: Initiate return of equipment from an active rental.
+      tags:
+        - Rentals
+      parameters:
+        - name: rentalId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReturnRequest'
+      responses:
+        '200':
+          description: Return initiated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Rental'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+        - ApiKeyAuth: []
+  /fleet:
+    get:
+      operationId: getFleet
+      summary: Get Fleet Overview
+      description: >-
+        Retrieve real-time fleet overview for all active rentals. Provides
+        worksite visibility and control over rented equipment across job sites.
+      tags:
+        - Fleet
+      parameters:
+        - name: jobSite
+          in: query
+          schema:
+            type: string
+          description: Filter by job site
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [active, idle, overdue]
+      responses:
+        '200':
+          description: Fleet overview returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FleetResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+        - ApiKeyAuth: []
+  /invoices:
+    get:
+      operationId: listInvoices
+      summary: List Invoices
+      description: Retrieve invoices for automated invoice transmission and payment processing.
+      tags:
+        - Invoices
+      parameters:
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [pending, paid, overdue, disputed]
+          description: Filter by invoice status
+        - name: startDate
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: endDate
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: purchaseOrderNumber
+          in: query
+          schema:
+            type: string
+          description: Filter by customer purchase order number
+      responses:
+        '200':
+          description: Invoices returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Invoice'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+        - ApiKeyAuth: []
+  /invoices/{invoiceId}:
+    get:
+      operationId: getInvoice
+      summary: Get Invoice
+      description: Retrieve details for a specific invoice.
+      tags:
+        - Invoices
+      parameters:
+        - name: invoiceId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Invoice details returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+        - ApiKeyAuth: []
+  /invoices/{invoiceId}/pay:
+    post:
+      operationId: payInvoice
+      summary: Pay Invoice
+      description: Submit payment for an invoice to automate bill pay management.
+      tags:
+        - Invoices
+      parameters:
+        - name: invoiceId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentRequest'
+      responses:
+        '200':
+          description: Payment submitted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+        - ApiKeyAuth: []
+  /locations:
+    get:
+      operationId: listLocations
+      summary: List Branch Locations
+      description: Retrieve United Rentals branch locations by geography or proximity.
+      tags:
+        - Locations
+      parameters:
+        - name: zipCode
+          in: query
+          schema:
+            type: string
+          description: Filter by proximity to zip code
+        - name: state
+          in: query
+          schema:
+            type: string
+          description: Filter by US state code
+        - name: radius
+          in: query
+          schema:
+            type: integer
+          description: Search radius in miles (when using zipCode)
+      responses:
+        '200':
+          description: Locations returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Location'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+        - ApiKeyAuth: []
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: United Rentals API key from Total Control portal
+  schemas:
+    Equipment:
+      type: object
+      properties:
+        equipmentId:
+          type: string
+        name:
+          type: string
+        category:
+          type: string
+          description: Equipment category (aerial, earthmoving, power, etc.)
+        type:
+          type: string
+        manufacturer:
+          type: string
+        model:
+          type: string
+        specifications:
+          type: object
+          additionalProperties: true
+          description: Equipment-specific technical specifications
+        dailyRate:
+          type: number
+          format: double
+        weeklyRate:
+          type: number
+          format: double
+        monthlyRate:
+          type: number
+          format: double
+        available:
+          type: boolean
+        nearestBranch:
+          type: string
+    EquipmentListResponse:
+      type: object
+      properties:
+        equipment:
+          type: array
+          items:
+            $ref: '#/components/schemas/Equipment'
+        total:
+          type: integer
+        page:
+          type: integer
+        pageSize:
+          type: integer
+    AvailabilityResponse:
+      type: object
+      properties:
+        equipmentId:
+          type: string
+        available:
+          type: boolean
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+        branchId:
+          type: string
+        estimatedPrice:
+          type: number
+          format: double
+    RentalRequest:
+      type: object
+      required:
+        - equipmentId
+        - startDate
+        - endDate
+        - jobSite
+        - purchaseOrderNumber
+      properties:
+        equipmentId:
+          type: string
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+        jobSite:
+          type: string
+          description: Job site or project name
+        deliveryAddress:
+          type: string
+        purchaseOrderNumber:
+          type: string
+          description: Customer PO number for ERP integration
+        notes:
+          type: string
+        branchId:
+          type: string
+    Rental:
+      type: object
+      properties:
+        rentalId:
+          type: string
+        status:
+          type: string
+          enum: [pending, active, returned, cancelled]
+        equipment:
+          $ref: '#/components/schemas/Equipment'
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+        returnDate:
+          type: string
+          format: date
+        jobSite:
+          type: string
+        deliveryAddress:
+          type: string
+        purchaseOrderNumber:
+          type: string
+        totalCost:
+          type: number
+          format: double
+        branchId:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+    RentalExtensionRequest:
+      type: object
+      required:
+        - newEndDate
+      properties:
+        newEndDate:
+          type: string
+          format: date
+          description: New return date
+        reason:
+          type: string
+    ReturnRequest:
+      type: object
+      properties:
+        returnDate:
+          type: string
+          format: date
+        condition:
+          type: string
+          enum: [good, damaged, missing-parts]
+        notes:
+          type: string
+    FleetResponse:
+      type: object
+      properties:
+        totalActive:
+          type: integer
+        totalIdle:
+          type: integer
+        totalOverdue:
+          type: integer
+        rentals:
+          type: array
+          items:
+            $ref: '#/components/schemas/Rental'
+    Invoice:
+      type: object
+      properties:
+        invoiceId:
+          type: string
+        invoiceNumber:
+          type: string
+        status:
+          type: string
+          enum: [pending, paid, overdue, disputed]
+        rentalId:
+          type: string
+        purchaseOrderNumber:
+          type: string
+        issueDate:
+          type: string
+          format: date
+        dueDate:
+          type: string
+          format: date
+        subtotal:
+          type: number
+          format: double
+        tax:
+          type: number
+          format: double
+        totalAmount:
+          type: number
+          format: double
+        lineItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvoiceLineItem'
+    InvoiceLineItem:
+      type: object
+      properties:
+        description:
+          type: string
+        quantity:
+          type: number
+        unitPrice:
+          type: number
+          format: double
+        amount:
+          type: number
+          format: double
+    PaymentRequest:
+      type: object
+      required:
+        - amount
+        - paymentMethod
+      properties:
+        amount:
+          type: number
+          format: double
+        paymentMethod:
+          type: string
+          enum: [ach, credit-card, check]
+        reference:
+          type: string
+    PaymentResponse:
+      type: object
+      properties:
+        paymentId:
+          type: string
+        status:
+          type: string
+          enum: [processed, pending]
+        amount:
+          type: number
+          format: double
+        processedAt:
+          type: string
+          format: date-time
+    Location:
+      type: object
+      properties:
+        branchId:
+          type: string
+        name:
+          type: string
+        address:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        zipCode:
+          type: string
+        phone:
+          type: string
+        hours:
+          type: string
+        distance:
+          type: number
+          format: double
+          description: Distance in miles from queried zip code
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+  responses:
+    BadRequest:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'

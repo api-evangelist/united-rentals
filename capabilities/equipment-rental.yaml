@@ -1,0 +1,365 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "United Rentals Equipment Rental"
+  description: >-
+    United Rentals equipment rental and fleet management capability combining equipment
+    catalog browsing, rental reservations, fleet tracking, invoice management, and
+    procure-to-pay automation. Designed for integration with customer ERP and
+    procurement systems via the Total Control platform.
+  tags:
+    - Equipment Rental
+    - Procurement
+    - Fleet Management
+    - Construction
+    - ERP Integration
+    - Procure To Pay
+  created: "2026-05-03"
+  modified: "2026-05-03"
+
+binds:
+  - namespace: env
+    keys:
+      UNITED_RENTALS_API_KEY: UNITED_RENTALS_API_KEY
+
+capability:
+  consumes:
+    - import: united-rentals-total-control
+      location: ./shared/united-rentals-total-control.yaml
+
+  exposes:
+    - type: rest
+      port: 8080
+      namespace: united-rentals-equipment-api
+      description: "Unified REST API for United Rentals equipment rental and fleet management."
+      resources:
+        - path: /v1/equipment
+          name: equipment
+          description: "Equipment catalog and availability"
+          operations:
+            - method: GET
+              name: list-equipment
+              description: "Browse equipment catalog by category and location"
+              call: "united-rentals-total-control.list-equipment"
+              with:
+                category: "rest.category"
+                available: "rest.available"
+                branchId: "rest.branchId"
+                page: "rest.page"
+                pageSize: "rest.pageSize"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/equipment/{id}
+          name: equipment-detail
+          description: "Individual equipment details"
+          operations:
+            - method: GET
+              name: get-equipment
+              description: "Get equipment details and pricing"
+              call: "united-rentals-total-control.get-equipment"
+              with:
+                equipmentId: "rest.id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/equipment/{id}/availability
+          name: equipment-availability
+          description: "Equipment availability check"
+          operations:
+            - method: GET
+              name: check-equipment-availability
+              description: "Check availability for a date range"
+              call: "united-rentals-total-control.check-equipment-availability"
+              with:
+                equipmentId: "rest.id"
+                startDate: "rest.startDate"
+                endDate: "rest.endDate"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/rentals
+          name: rentals
+          description: "Rental reservation management"
+          operations:
+            - method: POST
+              name: create-rental
+              description: "Create a rental reservation"
+              call: "united-rentals-total-control.create-rental"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: GET
+              name: list-rentals
+              description: "List rental orders"
+              call: "united-rentals-total-control.list-rentals"
+              with:
+                status: "rest.status"
+                jobSite: "rest.jobSite"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/rentals/{id}
+          name: rental
+          description: "Individual rental operations"
+          operations:
+            - method: GET
+              name: get-rental
+              description: "Get rental details"
+              call: "united-rentals-total-control.get-rental"
+              with:
+                rentalId: "rest.id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/rentals/{id}/extend
+          name: rental-extension
+          description: "Rental extension"
+          operations:
+            - method: POST
+              name: extend-rental
+              description: "Extend an active rental"
+              call: "united-rentals-total-control.extend-rental"
+              with:
+                rentalId: "rest.id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/rentals/{id}/return
+          name: rental-return
+          description: "Equipment return"
+          operations:
+            - method: POST
+              name: return-rental
+              description: "Initiate equipment return"
+              call: "united-rentals-total-control.return-rental"
+              with:
+                rentalId: "rest.id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/fleet
+          name: fleet
+          description: "Fleet overview and worksite management"
+          operations:
+            - method: GET
+              name: get-fleet
+              description: "Get real-time fleet status"
+              call: "united-rentals-total-control.get-fleet"
+              with:
+                jobSite: "rest.jobSite"
+                status: "rest.status"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/invoices
+          name: invoices
+          description: "Invoice management"
+          operations:
+            - method: GET
+              name: list-invoices
+              description: "List invoices for payment processing"
+              call: "united-rentals-total-control.list-invoices"
+              with:
+                status: "rest.status"
+                purchaseOrderNumber: "rest.purchaseOrderNumber"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/invoices/{id}
+          name: invoice
+          description: "Individual invoice operations"
+          operations:
+            - method: GET
+              name: get-invoice
+              description: "Get invoice details"
+              call: "united-rentals-total-control.get-invoice"
+              with:
+                invoiceId: "rest.id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/invoices/{id}/pay
+          name: invoice-payment
+          description: "Invoice payment"
+          operations:
+            - method: POST
+              name: pay-invoice
+              description: "Submit payment for an invoice"
+              call: "united-rentals-total-control.pay-invoice"
+              with:
+                invoiceId: "rest.id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/locations
+          name: locations
+          description: "Branch location search"
+          operations:
+            - method: GET
+              name: list-locations
+              description: "Find nearby United Rentals branches"
+              call: "united-rentals-total-control.list-locations"
+              with:
+                zipCode: "rest.zipCode"
+                state: "rest.state"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9080
+      namespace: united-rentals-equipment-mcp
+      transport: http
+      description: "MCP server for AI-assisted equipment rental and fleet management."
+      tools:
+        - name: list-equipment
+          description: "Browse the United Rentals equipment catalog by category, type, and location"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "united-rentals-total-control.list-equipment"
+          with:
+            category: "tools.category"
+            available: "tools.available"
+            branchId: "tools.branchId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-equipment
+          description: "Get details and rental rates for specific equipment"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "united-rentals-total-control.get-equipment"
+          with:
+            equipmentId: "tools.equipmentId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: check-equipment-availability
+          description: "Check if equipment is available for a specific date range and location"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "united-rentals-total-control.check-equipment-availability"
+          with:
+            equipmentId: "tools.equipmentId"
+            startDate: "tools.startDate"
+            endDate: "tools.endDate"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: create-rental
+          description: "Create an equipment rental reservation linked to a purchase order"
+          hints:
+            readOnly: false
+            destructive: false
+          call: "united-rentals-total-control.create-rental"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-rentals
+          description: "List active and historical rental orders by job site or status"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "united-rentals-total-control.list-rentals"
+          with:
+            status: "tools.status"
+            jobSite: "tools.jobSite"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-rental
+          description: "Get full details for a specific rental order"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "united-rentals-total-control.get-rental"
+          with:
+            rentalId: "tools.rentalId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: extend-rental
+          description: "Extend the end date of an active equipment rental"
+          hints:
+            readOnly: false
+            destructive: false
+          call: "united-rentals-total-control.extend-rental"
+          with:
+            rentalId: "tools.rentalId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: return-rental
+          description: "Initiate the return of rented equipment"
+          hints:
+            readOnly: false
+            destructive: false
+          call: "united-rentals-total-control.return-rental"
+          with:
+            rentalId: "tools.rentalId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-fleet
+          description: "Get real-time fleet overview across all active rentals and job sites"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "united-rentals-total-control.get-fleet"
+          with:
+            jobSite: "tools.jobSite"
+            status: "tools.status"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-invoices
+          description: "List rental invoices filtered by status or purchase order number"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "united-rentals-total-control.list-invoices"
+          with:
+            status: "tools.status"
+            purchaseOrderNumber: "tools.purchaseOrderNumber"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-invoice
+          description: "Get full details for a specific rental invoice"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "united-rentals-total-control.get-invoice"
+          with:
+            invoiceId: "tools.invoiceId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: pay-invoice
+          description: "Submit payment (ACH, credit card, or check) for a rental invoice"
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: false
+          call: "united-rentals-total-control.pay-invoice"
+          with:
+            invoiceId: "tools.invoiceId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-locations
+          description: "Find United Rentals branch locations near a zip code or in a state"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "united-rentals-total-control.list-locations"
+          with:
+            zipCode: "tools.zipCode"
+            state: "tools.state"
+          outputParameters:
+            - type: object
+              mapping: "$."

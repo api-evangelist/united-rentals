@@ -1,0 +1,94 @@
+vocabulary:
+  name: United Rentals API Vocabulary
+  description: Domain vocabulary for United Rentals covering equipment rental, fleet management, procurement integration, and the procure-to-pay lifecycle.
+  version: 1.0.0
+  created: '2026-05-03'
+  modified: '2026-05-03'
+
+terms:
+  - term: EquipmentRental
+    label: Equipment Rental
+    definition: A temporary lease arrangement for construction, industrial, or general-purpose equipment. United Rentals is the world's largest equipment rental company.
+    domain: Business Model
+
+  - term: TotalControl
+    label: Total Control
+    definition: United Rentals' digital platform for fleet and worksite management, procurement integration, and billing. Supports web portal and API access.
+    domain: Platform
+
+  - term: ProcureToPay
+    label: Procure-to-Pay
+    definition: The end-to-end business process from identifying equipment needs through order placement, delivery, and invoice payment. United Rentals APIs simplify this lifecycle.
+    domain: Process
+
+  - term: PunchOut
+    label: Punch-Out Catalog
+    definition: An integration method where users initiate orders from within their company's ERP or procurement system, which redirects to a supplier's catalog. United Rentals supports punch-out catalog ordering.
+    domain: Integration
+
+  - term: cXML
+    label: Commerce XML
+    definition: A standardized XML format for procurement transactions including purchase orders, invoices, and catalog punchout. One of United Rentals' supported integration formats.
+    domain: Standards
+    related: [EDI, JSON]
+
+  - term: EDI
+    label: Electronic Data Interchange
+    definition: Standardized electronic format for business document exchange. United Rentals supports EDI for automated invoicing and order management.
+    domain: Integration
+
+  - term: PurchaseOrder
+    label: Purchase Order
+    definition: A buyer-generated document authorizing a purchase from a vendor. United Rentals requires a purchaseOrderNumber for all rental reservations to enable ERP integration.
+    domain: Procurement
+
+  - term: JobSite
+    label: Job Site
+    definition: A physical location where construction or industrial work is being performed and equipment is deployed. Used to organize and track active rental fleet.
+    domain: Operations
+
+  - term: AerialEquipment
+    label: Aerial Equipment
+    definition: Equipment designed to lift workers and materials to elevated work heights, including boom lifts, scissor lifts, and telehandlers.
+    domain: Equipment Categories
+
+  - term: EarthMovingEquipment
+    label: Earthmoving Equipment
+    definition: Heavy equipment used for excavation, grading, and material handling, including excavators, bulldozers, and compactors.
+    domain: Equipment Categories
+
+  - term: GeneralTools
+    label: General Tools
+    definition: Smaller equipment and tools rented for general construction and maintenance tasks, including air compressors, generators, and power tools.
+    domain: Equipment Categories
+
+  - term: FleetManagement
+    label: Fleet Management
+    definition: Real-time tracking and management of all rented equipment across active job sites and projects. Enabled through Total Control API.
+    domain: Operations
+
+  - term: RentalRate
+    label: Rental Rate
+    definition: The price charged for equipment rental. United Rentals offers daily, weekly, and monthly rates for most equipment.
+    domain: Pricing
+    values: [dailyRate, weeklyRate, monthlyRate]
+
+  - term: InvoiceTransmission
+    label: Automated Invoice Transmission
+    definition: Electronic delivery of rental invoices via EDI, cXML, or JSON. Reduces manual processing and enables automated AP workflows.
+    domain: Billing
+
+  - term: BillPayManagement
+    label: Bill Pay Management
+    definition: Automated management of rental invoice payments integrated with customer ERP systems. Part of the procure-to-pay lifecycle.
+    domain: Billing
+
+  - term: EnvironmentalFee
+    label: Environmental Fee
+    definition: A surcharge on rental invoices covering the cost of responsible disposal of fluids and materials used in equipment maintenance.
+    domain: Billing
+
+  - term: ACH
+    label: Automated Clearing House
+    definition: Electronic network for financial transactions. One of the payment methods accepted for invoice payment via the United Rentals API.
+    domain: Payment

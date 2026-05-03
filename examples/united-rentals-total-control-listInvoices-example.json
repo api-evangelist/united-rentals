@@ -1,0 +1,68 @@
+{
+  "request": {
+    "method": "GET",
+    "path": "/v1/invoices",
+    "headers": {
+      "X-API-Key": "ur_sk_prod_abc123xyz"
+    },
+    "query": {
+      "status": "pending",
+      "startDate": "2026-04-01",
+      "endDate": "2026-05-01"
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": [
+      {
+        "invoiceId": "INV-2026-04-00441",
+        "invoiceNumber": "INV-2026-04-00441",
+        "status": "pending",
+        "rentalId": "RNT-2026-04-003322",
+        "purchaseOrderNumber": "PO-2026-TOWER-031",
+        "issueDate": "2026-04-22",
+        "dueDate": "2026-05-22",
+        "subtotal": 2925.00,
+        "tax": 292.50,
+        "totalAmount": 3217.50,
+        "lineItems": [
+          {
+            "description": "40 ft Straight Boom Lift - 30 day rental",
+            "quantity": 1,
+            "unitPrice": 2925.00,
+            "amount": 2925.00
+          },
+          {
+            "description": "Environmental/Fuel Fee",
+            "quantity": 1,
+            "unitPrice": 0.00,
+            "amount": 0.00
+          }
+        ]
+      },
+      {
+        "invoiceId": "INV-2026-04-00389",
+        "invoiceNumber": "INV-2026-04-00389",
+        "status": "pending",
+        "rentalId": "RNT-2026-04-003100",
+        "purchaseOrderNumber": "PO-2026-BRIDGE-019",
+        "issueDate": "2026-04-15",
+        "dueDate": "2026-05-15",
+        "subtotal": 1350.00,
+        "tax": 135.00,
+        "totalAmount": 1485.00,
+        "lineItems": [
+          {
+            "description": "60 ft Articulating Boom Lift - 1 week rental",
+            "quantity": 1,
+            "unitPrice": 1350.00,
+            "amount": 1350.00
+          }
+        ]
+      }
+    ]
+  }
+}

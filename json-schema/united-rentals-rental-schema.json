@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/united-rentals/main/json-schema/united-rentals-rental-schema.json",
+  "title": "United Rentals Rental Order",
+  "description": "Schema representing a United Rentals equipment rental reservation order.",
+  "type": "object",
+  "properties": {
+    "rentalId": {
+      "type": "string",
+      "description": "United Rentals rental order identifier"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["pending", "active", "returned", "cancelled"],
+      "description": "Current rental status"
+    },
+    "equipment": {
+      "$ref": "#/$defs/Equipment"
+    },
+    "startDate": {
+      "type": "string",
+      "format": "date",
+      "description": "Rental start date"
+    },
+    "endDate": {
+      "type": "string",
+      "format": "date",
+      "description": "Scheduled return date"
+    },
+    "returnDate": {
+      "type": ["string", "null"],
+      "format": "date",
+      "description": "Actual return date (null if not yet returned)"
+    },
+    "jobSite": {
+      "type": "string",
+      "description": "Job site or project name where equipment is deployed"
+    },
+    "deliveryAddress": {
+      "type": "string",
+      "description": "Equipment delivery address"
+    },
+    "purchaseOrderNumber": {
+      "type": "string",
+      "description": "Customer purchase order number for ERP integration"
+    },
+    "totalCost": {
+      "type": "number",
+      "format": "double",
+      "minimum": 0,
+      "description": "Total rental cost in USD"
+    },
+    "branchId": {
+      "type": "string",
+      "description": "United Rentals branch fulfilling the rental"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Rental order creation timestamp"
+    }
+  },
+  "required": ["rentalId", "status", "equipment", "startDate", "endDate", "purchaseOrderNumber"],
+  "$defs": {
+    "Equipment": {
+      "type": "object",
+      "title": "Equipment",
+      "description": "A piece of rental equipment from United Rentals",
+      "properties": {
+        "equipmentId": {
+          "type": "string",
+          "description": "United Rentals equipment identifier"
+        },
+        "name": {
+          "type": "string",
+          "description": "Equipment display name"
+        },
+        "category": {
+          "type": "string",
+          "description": "Equipment category (aerial, earthmoving, power, general tools, etc.)"
+        },
+        "type": {
+          "type": "string",
+          "description": "Equipment type within category"
+        },
+        "manufacturer": {
+          "type": "string",
+          "description": "Equipment manufacturer"
+        },
+        "model": {
+          "type": "string",
+          "description": "Equipment model designation"
+        },
+        "specifications": {
+          "type": "object",
+          "additionalProperties": true,
+          "description": "Equipment-specific technical specifications"
+        },
+        "dailyRate": {
+          "type": "number",
+          "format": "double",
+          "minimum": 0,
+          "description": "Daily rental rate in USD"
+        },
+        "weeklyRate": {
+          "type": "number",
+          "format": "double",
+          "minimum": 0,
+          "description": "Weekly rental rate in USD"
+        },
+        "monthlyRate": {
+          "type": "number",
+          "format": "double",
+          "minimum": 0,
+          "description": "Monthly rental rate in USD"
+        },
+        "available": {
+          "type": "boolean",
+          "description": "Whether the equipment is currently available"
+        }
+      },
+      "required": ["equipmentId", "name", "category"]
+    }
+  }
+}

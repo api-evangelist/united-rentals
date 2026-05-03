@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/united-rentals/main/json-schema/united-rentals-invoice-schema.json",
+  "title": "United Rentals Invoice",
+  "description": "Schema representing a United Rentals rental billing invoice.",
+  "type": "object",
+  "properties": {
+    "invoiceId": {
+      "type": "string",
+      "description": "Invoice identifier"
+    },
+    "invoiceNumber": {
+      "type": "string",
+      "description": "Human-readable invoice number"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["pending", "paid", "overdue", "disputed"],
+      "description": "Invoice payment status"
+    },
+    "rentalId": {
+      "type": "string",
+      "description": "Associated rental order identifier"
+    },
+    "purchaseOrderNumber": {
+      "type": "string",
+      "description": "Customer purchase order number"
+    },
+    "issueDate": {
+      "type": "string",
+      "format": "date",
+      "description": "Invoice issue date"
+    },
+    "dueDate": {
+      "type": "string",
+      "format": "date",
+      "description": "Payment due date"
+    },
+    "subtotal": {
+      "type": "number",
+      "format": "double",
+      "minimum": 0,
+      "description": "Pre-tax subtotal in USD"
+    },
+    "tax": {
+      "type": "number",
+      "format": "double",
+      "minimum": 0,
+      "description": "Tax amount in USD"
+    },
+    "totalAmount": {
+      "type": "number",
+      "format": "double",
+      "minimum": 0,
+      "description": "Total invoice amount including tax in USD"
+    },
+    "lineItems": {
+      "type": "array",
+      "description": "Invoice line items",
+      "items": {
+        "$ref": "#/$defs/InvoiceLineItem"
+      }
+    }
+  },
+  "required": ["invoiceId", "invoiceNumber", "status", "issueDate", "dueDate", "totalAmount"],
+  "$defs": {
+    "InvoiceLineItem": {
+      "type": "object",
+      "title": "Invoice Line Item",
+      "description": "A single billing line item on the invoice",
+      "properties": {
+        "description": {
+          "type": "string",
+          "description": "Line item description"
+        },
+        "quantity": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Quantity (may be fractional for partial days/weeks)"
+        },
+        "unitPrice": {
+          "type": "number",
+          "format": "double",
+          "minimum": 0,
+          "description": "Unit price in USD"
+        },
+        "amount": {
+          "type": "number",
+          "format": "double",
+          "minimum": 0,
+          "description": "Line total in USD"
+        }
+      },
+      "required": ["description", "amount"]
+    }
+  }
+}

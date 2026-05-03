@@ -1,0 +1,158 @@
+extends: spectral:oas
+rules:
+
+  # Require operationId on every operation
+  operation-operationId:
+    description: Every operation must have a unique operationId.
+    severity: error
+    given: "$.paths.*[get,post,put,patch,delete,options,head]"
+    then:
+      field: operationId
+      function: truthy
+
+  # Require operation summary in Title Case
+  operation-summary-title-case:
+    description: Operation summaries must use Title Case.
+    message: "Summary '{{value}}' should be in Title Case."
+    severity: warn
+    given: "$.paths.*[get,post,put,patch,delete].summary"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[A-Z][a-zA-Z0-9 ]*$"
+
+  # Require tags on every operation
+  operation-tags:
+    description: Every operation must include at least one tag.
+    severity: warn
+    given: "$.paths.*[get,post,put,patch,delete]"
+    then:
+      field: tags
+      function: truthy
+
+  # Require description on every operation
+  operation-description:
+    description: Every operation must have a description.
+    severity: warn
+    given: "$.paths.*[get,post,put,patch,delete]"
+    then:
+      field: description
+      function: truthy
+
+  # Paths must use kebab-case
+  path-kebab-case:
+    description: Path segments must use kebab-case (lowercase with hyphens).
+    severity: warn
+    given: "$.paths[*]~"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^(/[a-z0-9{}-]+)+$"
+
+  # Paths must not have a trailing slash
+  path-no-trailing-slash:
+    description: Paths must not end with a trailing slash.
+    severity: error
+    given: "$.paths[*]~"
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: ".+/$"
+
+  # All response codes must have descriptions
+  response-descriptions:
+    description: All response status codes must include a description.
+    severity: warn
+    given: "$.paths.*[get,post,put,patch,delete].responses.*"
+    then:
+      field: description
+      function: truthy
+
+  # API must use API key authentication (Total Control platform)
+  security-apikey-required:
+    description: United Rentals APIs require X-API-Key authentication. Security must be defined on all operations.
+    severity: error
+    given: "$.paths.*[get,post,put,patch,delete]"
+    then:
+      field: security
+      function: truthy
+
+  # POST/PUT/PATCH must have a requestBody
+  operation-request-body-required:
+    description: POST, PUT, and PATCH operations should have a requestBody.
+    severity: warn
+    given: "$.paths.*[post,put,patch]"
+    then:
+      field: requestBody
+      function: truthy
+
+  # Rental dates must use ISO 8601 date format
+  date-field-format:
+    description: Date fields must use format date (ISO 8601 YYYY-MM-DD).
+    severity: error
+    given: "$.components.schemas.*[*]"
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          if:
+            properties:
+              type:
+                const: string
+            required: [type]
+          then:
+            not:
+              properties:
+                description:
+                  pattern: "date"
+
+  # Purchase order number is required for rental creation
+  rental-purchase-order-required:
+    description: Rental creation requires a purchaseOrderNumber for ERP integration.
+    severity: error
+    given: "$.components.schemas.RentalRequest.required"
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: array
+          contains:
+            const: purchaseOrderNumber
+
+  # API info must include contact information
+  info-contact:
+    description: API info must include contact information.
+    severity: warn
+    given: "$.info"
+    then:
+      field: contact
+      function: truthy
+
+  # Servers must be defined
+  servers-defined:
+    description: API must define at least one server.
+    severity: error
+    given: "$"
+    then:
+      field: servers
+      function: truthy
+
+  # Parameters must have descriptions
+  parameter-description:
+    description: All parameters must have a description.
+    severity: warn
+    given: "$.paths.*[get,post,put,patch,delete].parameters.*"
+    then:
+      field: description
+      function: truthy
+
+  # Equipment rental rates must include daily, weekly, and monthly
+  equipment-rate-completeness:
+    description: Equipment schemas should define dailyRate, weeklyRate, and monthlyRate.
+    severity: warn
+    given: "$.components.schemas.Equipment.properties"
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          required: [dailyRate, weeklyRate, monthlyRate]

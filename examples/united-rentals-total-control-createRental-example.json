@@ -1,0 +1,52 @@
+{
+  "request": {
+    "method": "POST",
+    "path": "/v1/rentals",
+    "headers": {
+      "X-API-Key": "ur_sk_prod_abc123xyz",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "equipmentId": "EQ-450182",
+      "startDate": "2026-05-10",
+      "endDate": "2026-05-17",
+      "jobSite": "Downtown Tower Project - Phase 2",
+      "deliveryAddress": "1250 N Wacker Dr, Chicago, IL 60606",
+      "purchaseOrderNumber": "PO-2026-TOWER-042",
+      "notes": "Deliver by 7am, contact site foreman John at 312-555-9876",
+      "branchId": "BR-1042"
+    }
+  },
+  "response": {
+    "status": 201,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "rentalId": "RNT-2026-05-008821",
+      "status": "pending",
+      "equipment": {
+        "equipmentId": "EQ-450182",
+        "name": "40 ft Straight Boom Lift",
+        "category": "aerial",
+        "type": "Boom Lift",
+        "manufacturer": "JLG",
+        "model": "400S",
+        "dailyRate": 325.00,
+        "weeklyRate": 975.00,
+        "monthlyRate": 2925.00,
+        "available": true,
+        "nearestBranch": "BR-1042"
+      },
+      "startDate": "2026-05-10",
+      "endDate": "2026-05-17",
+      "returnDate": null,
+      "jobSite": "Downtown Tower Project - Phase 2",
+      "deliveryAddress": "1250 N Wacker Dr, Chicago, IL 60606",
+      "purchaseOrderNumber": "PO-2026-TOWER-042",
+      "totalCost": 975.00,
+      "branchId": "BR-1042",
+      "createdAt": "2026-05-03T15:00:00Z"
+    }
+  }
+}
