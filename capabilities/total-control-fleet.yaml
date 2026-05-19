@@ -1,0 +1,86 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: United Rentals Total Control API — Fleet
+  description: 'United Rentals Total Control API — Fleet. 1 operations. Lead operation: Get Fleet Overview. Self-contained
+    Naftiko capability covering one United Rentals business surface.'
+  tags:
+  - United Rentals
+  - Fleet
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    UNITED_RENTALS_API_KEY: UNITED_RENTALS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: total-control-fleet
+    baseUri: https://api.unitedrentals.com/v1
+    description: United Rentals Total Control API — Fleet business capability. Self-contained, no shared references.
+    resources:
+    - name: fleet
+      path: /fleet
+      operations:
+      - name: getfleet
+        method: GET
+        description: Get Fleet Overview
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: jobSite
+          in: query
+          type: string
+          description: Filter by job site
+        - name: status
+          in: query
+          type: string
+    authentication:
+      type: apikey
+      key: X-API-Key
+      value: '{{env.UNITED_RENTALS_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: total-control-fleet-rest
+    port: 8080
+    description: REST adapter for United Rentals Total Control API — Fleet. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/fleet
+      name: fleet
+      description: REST surface for fleet.
+      operations:
+      - method: GET
+        name: getfleet
+        description: Get Fleet Overview
+        call: total-control-fleet.getfleet
+        with:
+          jobSite: rest.jobSite
+          status: rest.status
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: total-control-fleet-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for United Rentals Total Control API — Fleet. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: get-fleet-overview
+      description: Get Fleet Overview
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: total-control-fleet.getfleet
+      with:
+        jobSite: tools.jobSite
+        status: tools.status
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,270 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: United Rentals Total Control API — Rentals
+  description: 'United Rentals Total Control API — Rentals. 5 operations. Lead operation: Create Rental Reservation. Self-contained
+    Naftiko capability covering one United Rentals business surface.'
+  tags:
+  - United Rentals
+  - Rentals
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    UNITED_RENTALS_API_KEY: UNITED_RENTALS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: total-control-rentals
+    baseUri: https://api.unitedrentals.com/v1
+    description: United Rentals Total Control API — Rentals business capability. Self-contained, no shared references.
+    resources:
+    - name: rentals
+      path: /rentals
+      operations:
+      - name: createrental
+        method: POST
+        description: Create Rental Reservation
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: listrentals
+        method: GET
+        description: List Rentals
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: status
+          in: query
+          type: string
+          description: Filter by rental status
+        - name: startDate
+          in: query
+          type: string
+        - name: endDate
+          in: query
+          type: string
+        - name: jobSite
+          in: query
+          type: string
+          description: Filter by job site or project
+    - name: rentals-rentalId
+      path: /rentals/{rentalId}
+      operations:
+      - name: getrental
+        method: GET
+        description: Get Rental Details
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: rentalId
+          in: path
+          type: string
+          description: Rental order identifier
+          required: true
+    - name: rentals-rentalId-extend
+      path: /rentals/{rentalId}/extend
+      operations:
+      - name: extendrental
+        method: POST
+        description: Extend Rental
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: rentalId
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: rentals-rentalId-return
+      path: /rentals/{rentalId}/return
+      operations:
+      - name: returnrental
+        method: POST
+        description: Return Rental
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: rentalId
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: apikey
+      key: X-API-Key
+      value: '{{env.UNITED_RENTALS_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: total-control-rentals-rest
+    port: 8080
+    description: REST adapter for United Rentals Total Control API — Rentals. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/rentals
+      name: rentals
+      description: REST surface for rentals.
+      operations:
+      - method: POST
+        name: createrental
+        description: Create Rental Reservation
+        call: total-control-rentals.createrental
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: listrentals
+        description: List Rentals
+        call: total-control-rentals.listrentals
+        with:
+          status: rest.status
+          startDate: rest.startDate
+          endDate: rest.endDate
+          jobSite: rest.jobSite
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/rentals/{rentalid}
+      name: rentals-rentalid
+      description: REST surface for rentals-rentalId.
+      operations:
+      - method: GET
+        name: getrental
+        description: Get Rental Details
+        call: total-control-rentals.getrental
+        with:
+          rentalId: rest.rentalId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/rentals/{rentalid}/extend
+      name: rentals-rentalid-extend
+      description: REST surface for rentals-rentalId-extend.
+      operations:
+      - method: POST
+        name: extendrental
+        description: Extend Rental
+        call: total-control-rentals.extendrental
+        with:
+          rentalId: rest.rentalId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/rentals/{rentalid}/return
+      name: rentals-rentalid-return
+      description: REST surface for rentals-rentalId-return.
+      operations:
+      - method: POST
+        name: returnrental
+        description: Return Rental
+        call: total-control-rentals.returnrental
+        with:
+          rentalId: rest.rentalId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: total-control-rentals-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for United Rentals Total Control API — Rentals. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: create-rental-reservation
+      description: Create Rental Reservation
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: total-control-rentals.createrental
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-rentals
+      description: List Rentals
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: total-control-rentals.listrentals
+      with:
+        status: tools.status
+        startDate: tools.startDate
+        endDate: tools.endDate
+        jobSite: tools.jobSite
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-rental-details
+      description: Get Rental Details
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: total-control-rentals.getrental
+      with:
+        rentalId: tools.rentalId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: extend-rental
+      description: Extend Rental
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: total-control-rentals.extendrental
+      with:
+        rentalId: tools.rentalId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: return-rental
+      description: Return Rental
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: total-control-rentals.returnrental
+      with:
+        rentalId: tools.rentalId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
