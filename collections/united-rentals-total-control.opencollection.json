@@ -1,0 +1,473 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "United Rentals Total Control API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Equipment",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Equipment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.unitedrentals.com/v1/equipment",
+            "params": [
+              {
+                "name": "category",
+                "value": "",
+                "type": "query",
+                "description": "Equipment category (e.g., aerial, earthmoving, power)"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Equipment type filter"
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "query",
+                "description": "Filter by nearest branch location"
+              },
+              {
+                "name": "available",
+                "value": "",
+                "type": "query",
+                "description": "Filter for available equipment only"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Browse the United Rentals equipment catalog. Returns available equipment by category, type, and location for punch-out catalog integration."
+        },
+        {
+          "info": {
+            "name": "Get Equipment Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.unitedrentals.com/v1/equipment/:equipmentId",
+            "params": [
+              {
+                "name": "equipmentId",
+                "value": "",
+                "type": "path",
+                "description": "United Rentals equipment identifier"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieve details for a specific piece of equipment including availability and pricing."
+        },
+        {
+          "info": {
+            "name": "Check Equipment Availability",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.unitedrentals.com/v1/equipment/:equipmentId/availability",
+            "params": [
+              {
+                "name": "equipmentId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "Rental start date"
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "Rental end date"
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "query",
+                "description": "Preferred branch location"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Check availability of equipment for a specific date range and branch location."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Rentals",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Rentals",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.unitedrentals.com/v1/rentals",
+            "params": [
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by rental status"
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "jobSite",
+                "value": "",
+                "type": "query",
+                "description": "Filter by job site or project"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieve rental orders for the account. Supports fleet tracking and management."
+        },
+        {
+          "info": {
+            "name": "Create Rental Reservation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unitedrentals.com/v1/rentals",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create a new rental reservation order. Supports integration with customer procurement systems via purchase order. Processes ordering from within the customer's ERP environment through punch-out workflow."
+        },
+        {
+          "info": {
+            "name": "Get Rental Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.unitedrentals.com/v1/rentals/:rentalId",
+            "params": [
+              {
+                "name": "rentalId",
+                "value": "",
+                "type": "path",
+                "description": "Rental order identifier"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieve details for a specific rental order."
+        },
+        {
+          "info": {
+            "name": "Extend Rental",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unitedrentals.com/v1/rentals/:rentalId/extend",
+            "params": [
+              {
+                "name": "rentalId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Extend the duration of an active rental."
+        },
+        {
+          "info": {
+            "name": "Return Rental",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unitedrentals.com/v1/rentals/:rentalId/return",
+            "params": [
+              {
+                "name": "rentalId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Initiate return of equipment from an active rental."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Fleet",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Fleet Overview",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.unitedrentals.com/v1/fleet",
+            "params": [
+              {
+                "name": "jobSite",
+                "value": "",
+                "type": "query",
+                "description": "Filter by job site"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieve real-time fleet overview for all active rentals. Provides worksite visibility and control over rented equipment across job sites."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Invoices",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Invoices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.unitedrentals.com/v1/invoices",
+            "params": [
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by invoice status"
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "purchaseOrderNumber",
+                "value": "",
+                "type": "query",
+                "description": "Filter by customer purchase order number"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieve invoices for automated invoice transmission and payment processing."
+        },
+        {
+          "info": {
+            "name": "Get Invoice",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.unitedrentals.com/v1/invoices/:invoiceId",
+            "params": [
+              {
+                "name": "invoiceId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieve details for a specific invoice."
+        },
+        {
+          "info": {
+            "name": "Pay Invoice",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unitedrentals.com/v1/invoices/:invoiceId/pay",
+            "params": [
+              {
+                "name": "invoiceId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Submit payment for an invoice to automate bill pay management."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Locations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Branch Locations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.unitedrentals.com/v1/locations",
+            "params": [
+              {
+                "name": "zipCode",
+                "value": "",
+                "type": "query",
+                "description": "Filter by proximity to zip code"
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query",
+                "description": "Filter by US state code"
+              },
+              {
+                "name": "radius",
+                "value": "",
+                "type": "query",
+                "description": "Search radius in miles (when using zipCode)"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieve United Rentals branch locations by geography or proximity."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
