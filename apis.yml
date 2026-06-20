@@ -8,7 +8,7 @@ description: >-
   provides a broad selection of APIs to help customers simplify the procure-to-pay lifecycle for equipment rentals.
   United Rentals offers system integration through its Total Control platform, supporting EDI, cXML, JSON, and flat-file
   formats to connect with customer procurement and ERP systems.
-image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
   - Equipment Rental
   - Procurement
@@ -22,7 +22,7 @@ apis:
       The Total Control platform supports system integration via EDI, cXML, JSON, spreadsheet, and flat-file formats.
       Customers can integrate with their procurement or ERP systems for punch-out catalog ordering, automated invoicing,
       PO management, fleet management, and bill pay. Processes hundreds of secure customer integrations.
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://www.unitedrentals.com/services/online-services/total-control/system-integration
     baseURL: https://api.unitedrentals.com/v1
     tags:
