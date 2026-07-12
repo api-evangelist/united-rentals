@@ -1,0 +1,16 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/united-rentals-total-control-openapi.yml
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+schemes:
+- name: ApiKeyAuth
+  type: apiKey
+  in: header
+  parameter: X-API-Key
+  description: United Rentals API key from Total Control portal
+  sources:
+  - openapi/united-rentals-total-control-openapi.yml

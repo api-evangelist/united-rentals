@@ -42,6 +42,10 @@ apis:
         url: >-
           https://raw.githubusercontent.com/api-evangelist/united-rentals/main/openapi/united-rentals-total-control-openapi.yml
 common:
+  - type: DomainSecurity
+    url: security/united-rentals-domain-security.yml
+  - type: Authentication
+    url: authentication/united-rentals-authentication.yml
   - type: Website
     url: https://www.unitedrentals.com
   - type: Total Control
