@@ -1,0 +1,237 @@
+openapi: 3.1.0
+info:
+  title: United Rentals Total Control Equipment Invoices API
+  description: United Rentals provides a broad selection of APIs to simplify the procure-to-pay lifecycle for equipment rentals. The Total Control platform enables integration with customer procurement and ERP systems via EDI, cXML, JSON, and flat-file formats. Capabilities include punch-out catalog ordering, rental reservations, fleet management, invoice management, and automated PO/bill pay workflows. United Rentals is the world's largest equipment rental company.
+  version: 1.0.0
+  contact:
+    name: United Rentals Integration Team
+    url: https://www.unitedrentals.com/services/online-services/total-control/system-integration
+  termsOfService: https://www.unitedrentals.com
+servers:
+- url: https://api.unitedrentals.com/v1
+  description: United Rentals Production API
+tags:
+- name: Invoices
+  description: Invoice and billing management
+paths:
+  /invoices:
+    get:
+      operationId: listInvoices
+      summary: List Invoices
+      description: Retrieve invoices for automated invoice transmission and payment processing.
+      tags:
+      - Invoices
+      parameters:
+      - name: status
+        in: query
+        schema:
+          type: string
+          enum:
+          - pending
+          - paid
+          - overdue
+          - disputed
+        description: Filter by invoice status
+      - name: startDate
+        in: query
+        schema:
+          type: string
+          format: date
+      - name: endDate
+        in: query
+        schema:
+          type: string
+          format: date
+      - name: purchaseOrderNumber
+        in: query
+        schema:
+          type: string
+        description: Filter by customer purchase order number
+      responses:
+        '200':
+          description: Invoices returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Invoice'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+      - ApiKeyAuth: []
+  /invoices/{invoiceId}:
+    get:
+      operationId: getInvoice
+      summary: Get Invoice
+      description: Retrieve details for a specific invoice.
+      tags:
+      - Invoices
+      parameters:
+      - name: invoiceId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Invoice details returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+      - ApiKeyAuth: []
+  /invoices/{invoiceId}/pay:
+    post:
+      operationId: payInvoice
+      summary: Pay Invoice
+      description: Submit payment for an invoice to automate bill pay management.
+      tags:
+      - Invoices
+      parameters:
+      - name: invoiceId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentRequest'
+      responses:
+        '200':
+          description: Payment submitted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+      - ApiKeyAuth: []
+components:
+  responses:
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    PaymentRequest:
+      type: object
+      required:
+      - amount
+      - paymentMethod
+      properties:
+        amount:
+          type: number
+          format: double
+        paymentMethod:
+          type: string
+          enum:
+          - ach
+          - credit-card
+          - check
+        reference:
+          type: string
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    InvoiceLineItem:
+      type: object
+      properties:
+        description:
+          type: string
+        quantity:
+          type: number
+        unitPrice:
+          type: number
+          format: double
+        amount:
+          type: number
+          format: double
+    PaymentResponse:
+      type: object
+      properties:
+        paymentId:
+          type: string
+        status:
+          type: string
+          enum:
+          - processed
+          - pending
+        amount:
+          type: number
+          format: double
+        processedAt:
+          type: string
+          format: date-time
+    Invoice:
+      type: object
+      properties:
+        invoiceId:
+          type: string
+        invoiceNumber:
+          type: string
+        status:
+          type: string
+          enum:
+          - pending
+          - paid
+          - overdue
+          - disputed
+        rentalId:
+          type: string
+        purchaseOrderNumber:
+          type: string
+        issueDate:
+          type: string
+          format: date
+        dueDate:
+          type: string
+          format: date
+        subtotal:
+          type: number
+          format: double
+        tax:
+          type: number
+          format: double
+        totalAmount:
+          type: number
+          format: double
+        lineItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvoiceLineItem'
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: United Rentals API key from Total Control portal

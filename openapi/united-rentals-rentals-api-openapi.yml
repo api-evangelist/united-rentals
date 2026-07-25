@@ -1,0 +1,336 @@
+openapi: 3.1.0
+info:
+  title: United Total Control Equipment Rentals API
+  description: United Rentals provides a broad selection of APIs to simplify the procure-to-pay lifecycle for equipment rentals. The Total Control platform enables integration with customer procurement and ERP systems via EDI, cXML, JSON, and flat-file formats. Capabilities include punch-out catalog ordering, rental reservations, fleet management, invoice management, and automated PO/bill pay workflows. United Rentals is the world's largest equipment rental company.
+  version: 1.0.0
+  contact:
+    name: United Rentals Integration Team
+    url: https://www.unitedrentals.com/services/online-services/total-control/system-integration
+  termsOfService: https://www.unitedrentals.com
+servers:
+- url: https://api.unitedrentals.com/v1
+  description: United Rentals Production API
+tags:
+- name: Rentals
+  description: Rental reservations and orders
+paths:
+  /rentals:
+    post:
+      operationId: createRental
+      summary: Create Rental Reservation
+      description: Create a new rental reservation order. Supports integration with customer procurement systems via purchase order. Processes ordering from within the customer's ERP environment through punch-out workflow.
+      tags:
+      - Rentals
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RentalRequest'
+      responses:
+        '201':
+          description: Rental reservation created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Rental'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+      - ApiKeyAuth: []
+    get:
+      operationId: listRentals
+      summary: List Rentals
+      description: Retrieve rental orders for the account. Supports fleet tracking and management.
+      tags:
+      - Rentals
+      parameters:
+      - name: status
+        in: query
+        schema:
+          type: string
+          enum:
+          - pending
+          - active
+          - returned
+          - cancelled
+        description: Filter by rental status
+      - name: startDate
+        in: query
+        schema:
+          type: string
+          format: date
+      - name: endDate
+        in: query
+        schema:
+          type: string
+          format: date
+      - name: jobSite
+        in: query
+        schema:
+          type: string
+        description: Filter by job site or project
+      responses:
+        '200':
+          description: Rentals list returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Rental'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+      - ApiKeyAuth: []
+  /rentals/{rentalId}:
+    get:
+      operationId: getRental
+      summary: Get Rental Details
+      description: Retrieve details for a specific rental order.
+      tags:
+      - Rentals
+      parameters:
+      - name: rentalId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Rental order identifier
+      responses:
+        '200':
+          description: Rental details returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Rental'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+      - ApiKeyAuth: []
+  /rentals/{rentalId}/extend:
+    post:
+      operationId: extendRental
+      summary: Extend Rental
+      description: Extend the duration of an active rental.
+      tags:
+      - Rentals
+      parameters:
+      - name: rentalId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RentalExtensionRequest'
+      responses:
+        '200':
+          description: Rental extended successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Rental'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+      - ApiKeyAuth: []
+  /rentals/{rentalId}/return:
+    post:
+      operationId: returnRental
+      summary: Return Rental
+      description: Initiate return of equipment from an active rental.
+      tags:
+      - Rentals
+      parameters:
+      - name: rentalId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReturnRequest'
+      responses:
+        '200':
+          description: Return initiated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Rental'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+      - ApiKeyAuth: []
+components:
+  schemas:
+    RentalExtensionRequest:
+      type: object
+      required:
+      - newEndDate
+      properties:
+        newEndDate:
+          type: string
+          format: date
+          description: New return date
+        reason:
+          type: string
+    ReturnRequest:
+      type: object
+      properties:
+        returnDate:
+          type: string
+          format: date
+        condition:
+          type: string
+          enum:
+          - good
+          - damaged
+          - missing-parts
+        notes:
+          type: string
+    Rental:
+      type: object
+      properties:
+        rentalId:
+          type: string
+        status:
+          type: string
+          enum:
+          - pending
+          - active
+          - returned
+          - cancelled
+        equipment:
+          $ref: '#/components/schemas/Equipment'
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+        returnDate:
+          type: string
+          format: date
+        jobSite:
+          type: string
+        deliveryAddress:
+          type: string
+        purchaseOrderNumber:
+          type: string
+        totalCost:
+          type: number
+          format: double
+        branchId:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+    Equipment:
+      type: object
+      properties:
+        equipmentId:
+          type: string
+        name:
+          type: string
+        category:
+          type: string
+          description: Equipment category (aerial, earthmoving, power, etc.)
+        type:
+          type: string
+        manufacturer:
+          type: string
+        model:
+          type: string
+        specifications:
+          type: object
+          additionalProperties: true
+          description: Equipment-specific technical specifications
+        dailyRate:
+          type: number
+          format: double
+        weeklyRate:
+          type: number
+          format: double
+        monthlyRate:
+          type: number
+          format: double
+        available:
+          type: boolean
+        nearestBranch:
+          type: string
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    RentalRequest:
+      type: object
+      required:
+      - equipmentId
+      - startDate
+      - endDate
+      - jobSite
+      - purchaseOrderNumber
+      properties:
+        equipmentId:
+          type: string
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+        jobSite:
+          type: string
+          description: Job site or project name
+        deliveryAddress:
+          type: string
+        purchaseOrderNumber:
+          type: string
+          description: Customer PO number for ERP integration
+        notes:
+          type: string
+        branchId:
+          type: string
+  responses:
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: United Rentals API key from Total Control portal

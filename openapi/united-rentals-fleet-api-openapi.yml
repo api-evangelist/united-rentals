@@ -1,0 +1,153 @@
+openapi: 3.1.0
+info:
+  title: United Rentals Total Control Equipment Fleet API
+  description: United Rentals provides a broad selection of APIs to simplify the procure-to-pay lifecycle for equipment rentals. The Total Control platform enables integration with customer procurement and ERP systems via EDI, cXML, JSON, and flat-file formats. Capabilities include punch-out catalog ordering, rental reservations, fleet management, invoice management, and automated PO/bill pay workflows. United Rentals is the world's largest equipment rental company.
+  version: 1.0.0
+  contact:
+    name: United Rentals Integration Team
+    url: https://www.unitedrentals.com/services/online-services/total-control/system-integration
+  termsOfService: https://www.unitedrentals.com
+servers:
+- url: https://api.unitedrentals.com/v1
+  description: United Rentals Production API
+tags:
+- name: Fleet
+  description: Fleet and worksite management
+paths:
+  /fleet:
+    get:
+      operationId: getFleet
+      summary: Get Fleet Overview
+      description: Retrieve real-time fleet overview for all active rentals. Provides worksite visibility and control over rented equipment across job sites.
+      tags:
+      - Fleet
+      parameters:
+      - name: jobSite
+        in: query
+        schema:
+          type: string
+        description: Filter by job site
+      - name: status
+        in: query
+        schema:
+          type: string
+          enum:
+          - active
+          - idle
+          - overdue
+      responses:
+        '200':
+          description: Fleet overview returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FleetResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+      - ApiKeyAuth: []
+components:
+  responses:
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Rental:
+      type: object
+      properties:
+        rentalId:
+          type: string
+        status:
+          type: string
+          enum:
+          - pending
+          - active
+          - returned
+          - cancelled
+        equipment:
+          $ref: '#/components/schemas/Equipment'
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+        returnDate:
+          type: string
+          format: date
+        jobSite:
+          type: string
+        deliveryAddress:
+          type: string
+        purchaseOrderNumber:
+          type: string
+        totalCost:
+          type: number
+          format: double
+        branchId:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+    Equipment:
+      type: object
+      properties:
+        equipmentId:
+          type: string
+        name:
+          type: string
+        category:
+          type: string
+          description: Equipment category (aerial, earthmoving, power, etc.)
+        type:
+          type: string
+        manufacturer:
+          type: string
+        model:
+          type: string
+        specifications:
+          type: object
+          additionalProperties: true
+          description: Equipment-specific technical specifications
+        dailyRate:
+          type: number
+          format: double
+        weeklyRate:
+          type: number
+          format: double
+        monthlyRate:
+          type: number
+          format: double
+        available:
+          type: boolean
+        nearestBranch:
+          type: string
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    FleetResponse:
+      type: object
+      properties:
+        totalActive:
+          type: integer
+        totalIdle:
+          type: integer
+        totalOverdue:
+          type: integer
+        rentals:
+          type: array
+          items:
+            $ref: '#/components/schemas/Rental'
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: United Rentals API key from Total Control portal

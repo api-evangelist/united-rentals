@@ -1,0 +1,228 @@
+openapi: 3.1.0
+info:
+  title: United Rentals Total Control Equipment API
+  description: United Rentals provides a broad selection of APIs to simplify the procure-to-pay lifecycle for equipment rentals. The Total Control platform enables integration with customer procurement and ERP systems via EDI, cXML, JSON, and flat-file formats. Capabilities include punch-out catalog ordering, rental reservations, fleet management, invoice management, and automated PO/bill pay workflows. United Rentals is the world's largest equipment rental company.
+  version: 1.0.0
+  contact:
+    name: United Rentals Integration Team
+    url: https://www.unitedrentals.com/services/online-services/total-control/system-integration
+  termsOfService: https://www.unitedrentals.com
+servers:
+- url: https://api.unitedrentals.com/v1
+  description: United Rentals Production API
+tags:
+- name: Equipment
+  description: Equipment catalog and availability
+paths:
+  /equipment:
+    get:
+      operationId: listEquipment
+      summary: List Equipment
+      description: Browse the United Rentals equipment catalog. Returns available equipment by category, type, and location for punch-out catalog integration.
+      tags:
+      - Equipment
+      parameters:
+      - name: category
+        in: query
+        schema:
+          type: string
+        description: Equipment category (e.g., aerial, earthmoving, power)
+      - name: type
+        in: query
+        schema:
+          type: string
+        description: Equipment type filter
+      - name: branchId
+        in: query
+        schema:
+          type: string
+        description: Filter by nearest branch location
+      - name: available
+        in: query
+        schema:
+          type: boolean
+          default: true
+        description: Filter for available equipment only
+      - name: page
+        in: query
+        schema:
+          type: integer
+          default: 1
+      - name: pageSize
+        in: query
+        schema:
+          type: integer
+          default: 50
+      responses:
+        '200':
+          description: Equipment list returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EquipmentListResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+      - ApiKeyAuth: []
+  /equipment/{equipmentId}:
+    get:
+      operationId: getEquipment
+      summary: Get Equipment Details
+      description: Retrieve details for a specific piece of equipment including availability and pricing.
+      tags:
+      - Equipment
+      parameters:
+      - name: equipmentId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: United Rentals equipment identifier
+      responses:
+        '200':
+          description: Equipment details returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Equipment'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+      - ApiKeyAuth: []
+  /equipment/{equipmentId}/availability:
+    get:
+      operationId: checkEquipmentAvailability
+      summary: Check Equipment Availability
+      description: Check availability of equipment for a specific date range and branch location.
+      tags:
+      - Equipment
+      parameters:
+      - name: equipmentId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: startDate
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date
+        description: Rental start date
+      - name: endDate
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date
+        description: Rental end date
+      - name: branchId
+        in: query
+        schema:
+          type: string
+        description: Preferred branch location
+      responses:
+        '200':
+          description: Availability status returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AvailabilityResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+      - ApiKeyAuth: []
+components:
+  responses:
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Equipment:
+      type: object
+      properties:
+        equipmentId:
+          type: string
+        name:
+          type: string
+        category:
+          type: string
+          description: Equipment category (aerial, earthmoving, power, etc.)
+        type:
+          type: string
+        manufacturer:
+          type: string
+        model:
+          type: string
+        specifications:
+          type: object
+          additionalProperties: true
+          description: Equipment-specific technical specifications
+        dailyRate:
+          type: number
+          format: double
+        weeklyRate:
+          type: number
+          format: double
+        monthlyRate:
+          type: number
+          format: double
+        available:
+          type: boolean
+        nearestBranch:
+          type: string
+    AvailabilityResponse:
+      type: object
+      properties:
+        equipmentId:
+          type: string
+        available:
+          type: boolean
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+        branchId:
+          type: string
+        estimatedPrice:
+          type: number
+          format: double
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    EquipmentListResponse:
+      type: object
+      properties:
+        equipment:
+          type: array
+          items:
+            $ref: '#/components/schemas/Equipment'
+        total:
+          type: integer
+        page:
+          type: integer
+        pageSize:
+          type: integer
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: United Rentals API key from Total Control portal
