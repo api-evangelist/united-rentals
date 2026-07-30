@@ -1,5 +1,18 @@
 aid: united-rentals
 url: https://raw.githubusercontent.com/api-evangelist/united-rentals/refs/heads/main/apis.yml
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 created: '2026-03-21'
 modified: '2026-05-19'
 name: United Rentals
@@ -8,7 +21,7 @@ description: >-
   provides a broad selection of APIs to help customers simplify the procure-to-pay lifecycle for equipment rentals.
   United Rentals offers system integration through its Total Control platform, supporting EDI, cXML, JSON, and flat-file
   formats to connect with customer procurement and ERP systems.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/united-rentals.png
 tags:
   - Equipment Rental
   - Procurement
@@ -16,31 +29,76 @@ tags:
   - Construction
   - Fortune 500
 apis:
-  - name: United Rentals Total Control Integration API
-    description: >-
-      United Rentals provides a broad selection of APIs to simplify the procure-to-pay lifecycle for equipment rentals.
-      The Total Control platform supports system integration via EDI, cXML, JSON, spreadsheet, and flat-file formats.
-      Customers can integrate with their procurement or ERP systems for punch-out catalog ordering, automated invoicing,
-      PO management, fleet management, and bill pay. Processes hundreds of secure customer integrations.
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://www.unitedrentals.com/services/online-services/total-control/system-integration
-    baseURL: https://api.unitedrentals.com/v1
-    tags:
-      - Equipment Rental
-      - Procurement
-      - EDI
-      - cXML
-      - ERP Integration
-      - Supply Chain
-      - Fleet Management
-    properties:
-      - type: Documentation
-        url: https://www.unitedrentals.com/services/online-services/total-control/system-integration
-      - type: Total Control Platform
-        url: https://www.unitedrentals.com/services/online-services/total-control
-      - type: OpenAPI
-        url: >-
-          https://raw.githubusercontent.com/api-evangelist/united-rentals/main/openapi/united-rentals-total-control-openapi.yml
+- aid: united-rentals:united-rentals-equipment-api
+  name: United Rentals Equipment API
+  description: Equipment catalog and availability
+  humanURL: https://www.unitedrentals.com/services/online-services/total-control/system-integration
+  baseURL: https://api.unitedrentals.com/v1
+  tags:
+  - Equipment
+  properties:
+  - type: OpenAPI
+    url: openapi/united-rentals-equipment-api-openapi.yml
+  - type: Documentation
+    url: https://www.unitedrentals.com/services/online-services/total-control/system-integration
+  - type: Total Control Platform
+    url: https://www.unitedrentals.com/services/online-services/total-control
+- aid: united-rentals:united-rentals-fleet-api
+  name: United Rentals Fleet API
+  description: Fleet and worksite management
+  humanURL: https://www.unitedrentals.com/services/online-services/total-control/system-integration
+  baseURL: https://api.unitedrentals.com/v1
+  tags:
+  - Fleet
+  properties:
+  - type: OpenAPI
+    url: openapi/united-rentals-fleet-api-openapi.yml
+  - type: Documentation
+    url: https://www.unitedrentals.com/services/online-services/total-control/system-integration
+  - type: Total Control Platform
+    url: https://www.unitedrentals.com/services/online-services/total-control
+- aid: united-rentals:united-rentals-invoices-api
+  name: United Rentals Invoices API
+  description: Invoice and billing management
+  humanURL: https://www.unitedrentals.com/services/online-services/total-control/system-integration
+  baseURL: https://api.unitedrentals.com/v1
+  tags:
+  - Invoices
+  properties:
+  - type: OpenAPI
+    url: openapi/united-rentals-invoices-api-openapi.yml
+  - type: Documentation
+    url: https://www.unitedrentals.com/services/online-services/total-control/system-integration
+  - type: Total Control Platform
+    url: https://www.unitedrentals.com/services/online-services/total-control
+- aid: united-rentals:united-rentals-locations-api
+  name: United Rentals Locations API
+  description: Branch locations and service areas
+  humanURL: https://www.unitedrentals.com/services/online-services/total-control/system-integration
+  baseURL: https://api.unitedrentals.com/v1
+  tags:
+  - Locations
+  properties:
+  - type: OpenAPI
+    url: openapi/united-rentals-locations-api-openapi.yml
+  - type: Documentation
+    url: https://www.unitedrentals.com/services/online-services/total-control/system-integration
+  - type: Total Control Platform
+    url: https://www.unitedrentals.com/services/online-services/total-control
+- aid: united-rentals:united-rentals-rentals-api
+  name: United Rentals Rentals API
+  description: Rental reservations and orders
+  humanURL: https://www.unitedrentals.com/services/online-services/total-control/system-integration
+  baseURL: https://api.unitedrentals.com/v1
+  tags:
+  - Rentals
+  properties:
+  - type: OpenAPI
+    url: openapi/united-rentals-rentals-api-openapi.yml
+  - type: Documentation
+    url: https://www.unitedrentals.com/services/online-services/total-control/system-integration
+  - type: Total Control Platform
+    url: https://www.unitedrentals.com/services/online-services/total-control
 common:
   - type: AgenticAccess
     url: agentic-access/united-rentals-agentic-access.yml
