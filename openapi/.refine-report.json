@@ -1,0 +1,22 @@
+{
+  "provider": "united-rentals",
+  "sources": [
+    "united-rentals-equipment-api-openapi.yml",
+    "united-rentals-fleet-api-openapi.yml",
+    "united-rentals-invoices-api-openapi.yml",
+    "united-rentals-locations-api-openapi.yml",
+    "united-rentals-rentals-api-openapi.yml"
+  ],
+  "outputs": [
+    "united-rentals-equipment-api-openapi.yml",
+    "united-rentals-fleet-api-openapi.yml",
+    "united-rentals-invoices-api-openapi.yml",
+    "united-rentals-locations-api-openapi.yml",
+    "united-rentals-rentals-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
