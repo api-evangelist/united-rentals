@@ -1,0 +1,682 @@
+{
+  "item": [
+    {
+      "id": "9b72a0c4-93d7-4310-a86f-8cf345f09242",
+      "name": "Equipment",
+      "description": {
+        "content": "Equipment catalog and availability",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "01356c1d-c503-43c3-9e0a-7ee29f08e2e3",
+          "name": "List Equipment",
+          "request": {
+            "name": "List Equipment",
+            "description": {
+              "content": "Browse the United Rentals equipment catalog. Returns available equipment by category, type, and location for punch-out catalog integration.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "equipment"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "category",
+                  "value": "<string>",
+                  "description": "Equipment category (e.g., aerial, earthmoving, power)"
+                },
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>",
+                  "description": "Equipment type filter"
+                },
+                {
+                  "disabled": false,
+                  "key": "branchId",
+                  "value": "<string>",
+                  "description": "Filter by nearest branch location"
+                },
+                {
+                  "disabled": false,
+                  "key": "available",
+                  "value": "true",
+                  "description": "Filter for available equipment only"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "50"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c34ab849-5f16-4fe6-91b1-2a724e83b99e",
+              "name": "Equipment list returned",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "equipment"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "category",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "branchId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "available",
+                      "value": "true"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "50"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"equipment\": [\n    {\n      \"equipmentId\": \"string\",\n      \"name\": \"string\",\n      \"category\": \"string\",\n      \"type\": \"string\",\n      \"manufacturer\": \"string\",\n      \"model\": \"string\",\n      \"specifications\": {\n        \"key_0\": true,\n        \"key_1\": \"string\"\n      },\n      \"dailyRate\": 6845.820050919171,\n      \"weeklyRate\": 245.54020432165146,\n      \"monthlyRate\": 1469.1074398414905,\n      \"available\": true,\n      \"nearestBranch\": \"string\"\n    },\n    {\n      \"equipmentId\": \"string\",\n      \"name\": \"string\",\n      \"category\": \"string\",\n      \"type\": \"string\",\n      \"manufacturer\": \"string\",\n      \"model\": \"string\",\n      \"specifications\": {\n        \"key_0\": 4544.006408270415\n      },\n      \"dailyRate\": 8351.048258401099,\n      \"weeklyRate\": 3252.8363785464608,\n      \"monthlyRate\": 3476.1180430007953,\n      \"available\": false,\n      \"nearestBranch\": \"string\"\n    }\n  ],\n  \"total\": 5907,\n  \"page\": 1372,\n  \"pageSize\": 3723\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6cd16ae4-5aad-451e-b4a1-01930c662f7b",
+              "name": "Authentication required",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "equipment"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "category",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "branchId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "available",
+                      "value": "true"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "50"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fd383032-20ab-4747-b0b1-3a4c47653262",
+          "name": "Get Equipment Details",
+          "request": {
+            "name": "Get Equipment Details",
+            "description": {
+              "content": "Retrieve details for a specific piece of equipment including availability and pricing.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "equipment",
+                ":equipmentId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "equipmentId",
+                  "description": "(Required) United Rentals equipment identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "80c47a52-959b-4653-a41d-ee9fd399f08b",
+              "name": "Equipment details returned",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "equipment",
+                    ":equipmentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "equipmentId",
+                      "description": "(Required) United Rentals equipment identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"equipmentId\": \"string\",\n  \"name\": \"string\",\n  \"category\": \"string\",\n  \"type\": \"string\",\n  \"manufacturer\": \"string\",\n  \"model\": \"string\",\n  \"specifications\": {\n    \"key_0\": \"string\",\n    \"key_1\": 4781.844678209418\n  },\n  \"dailyRate\": 8353.159171697189,\n  \"weeklyRate\": 6016.428887409239,\n  \"monthlyRate\": 8202.978192180784,\n  \"available\": true,\n  \"nearestBranch\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "68f10956-6d1b-455b-ab7b-ccef6f33ae6f",
+              "name": "Authentication required",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "equipment",
+                    ":equipmentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "equipmentId",
+                      "description": "(Required) United Rentals equipment identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5283ce48-3daa-44ce-b8a4-307136eb5885",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "equipment",
+                    ":equipmentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "equipmentId",
+                      "description": "(Required) United Rentals equipment identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "297e81e3-e610-4fc1-821e-cc5541288ea0",
+          "name": "Check Equipment Availability",
+          "request": {
+            "name": "Check Equipment Availability",
+            "description": {
+              "content": "Check availability of equipment for a specific date range and branch location.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "equipment",
+                ":equipmentId",
+                "availability"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<date>",
+                  "description": "(Required) Rental start date"
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<date>",
+                  "description": "(Required) Rental end date"
+                },
+                {
+                  "disabled": false,
+                  "key": "branchId",
+                  "value": "<string>",
+                  "description": "Preferred branch location"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "equipmentId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ee653e29-3731-4889-83f3-d0a94358ab96",
+              "name": "Availability status returned",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "equipment",
+                    ":equipmentId",
+                    "availability"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "branchId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "equipmentId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"equipmentId\": \"string\",\n  \"available\": false,\n  \"startDate\": \"1956-05-19\",\n  \"endDate\": \"1967-10-29\",\n  \"branchId\": \"string\",\n  \"estimatedPrice\": 6738.951032799876\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8e8b2326-1055-4bfb-ab6b-21fea5a036c4",
+              "name": "Authentication required",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "equipment",
+                    ":equipmentId",
+                    "availability"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "branchId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "equipmentId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.unitedrentals.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "12c525e5-f8e9-48a5-958f-9ecddd7263aa",
+    "name": "United Rentals Total Control Equipment API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "United Rentals provides a broad selection of APIs to simplify the procure-to-pay lifecycle for equipment rentals. The Total Control platform enables integration with customer procurement and ERP systems via EDI, cXML, JSON, and flat-file formats. Capabilities include punch-out catalog ordering, rental reservations, fleet management, invoice management, and automated PO/bill pay workflows. United Rentals is the world's largest equipment rental company.\n\nContact Support:\n Name: United Rentals Integration Team",
+      "type": "text/plain"
+    }
+  }
+}

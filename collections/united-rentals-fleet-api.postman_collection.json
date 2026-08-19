@@ -1,0 +1,199 @@
+{
+  "item": [
+    {
+      "id": "b6d2acd1-df51-400d-a367-364c5437ad61",
+      "name": "Fleet",
+      "description": {
+        "content": "Fleet and worksite management",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e94cf662-e2a2-45e4-92fb-7007bdedc3e8",
+          "name": "Get Fleet Overview",
+          "request": {
+            "name": "Get Fleet Overview",
+            "description": {
+              "content": "Retrieve real-time fleet overview for all active rentals. Provides worksite visibility and control over rented equipment across job sites.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "fleet"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "jobSite",
+                  "value": "<string>",
+                  "description": "Filter by job site"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "f78f00fd-51fa-4caa-aaa3-d91f083b0e20",
+              "name": "Fleet overview returned",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fleet"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "jobSite",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"totalActive\": 6402,\n  \"totalIdle\": 4165,\n  \"totalOverdue\": 3967,\n  \"rentals\": [\n    {\n      \"rentalId\": \"string\",\n      \"status\": \"returned\",\n      \"equipment\": {\n        \"equipmentId\": \"string\",\n        \"name\": \"string\",\n        \"category\": \"string\",\n        \"type\": \"string\",\n        \"manufacturer\": \"string\",\n        \"model\": \"string\",\n        \"specifications\": {\n          \"key_0\": \"string\"\n        },\n        \"dailyRate\": 9950.229084913643,\n        \"weeklyRate\": 8732.168408779955,\n        \"monthlyRate\": 6008.020532561262,\n        \"available\": true,\n        \"nearestBranch\": \"string\"\n      },\n      \"startDate\": \"1996-06-08\",\n      \"endDate\": \"1997-10-13\",\n      \"returnDate\": \"1988-01-29\",\n      \"jobSite\": \"string\",\n      \"deliveryAddress\": \"string\",\n      \"purchaseOrderNumber\": \"string\",\n      \"totalCost\": 8801.623624888198,\n      \"branchId\": \"string\",\n      \"createdAt\": \"1994-12-19T21:01:50.006Z\"\n    },\n    {\n      \"rentalId\": \"string\",\n      \"status\": \"pending\",\n      \"equipment\": {\n        \"equipmentId\": \"string\",\n        \"name\": \"string\",\n        \"category\": \"string\",\n        \"type\": \"string\",\n        \"manufacturer\": \"string\",\n        \"model\": \"string\",\n        \"specifications\": {\n          \"key_0\": 9646\n        },\n        \"dailyRate\": 7374.646036730917,\n        \"weeklyRate\": 5816.2048428981725,\n        \"monthlyRate\": 7770.2782529204405,\n        \"available\": false,\n        \"nearestBranch\": \"string\"\n      },\n      \"startDate\": \"1984-09-05\",\n      \"endDate\": \"1970-03-27\",\n      \"returnDate\": \"1967-12-25\",\n      \"jobSite\": \"string\",\n      \"deliveryAddress\": \"string\",\n      \"purchaseOrderNumber\": \"string\",\n      \"totalCost\": 3890.726900065209,\n      \"branchId\": \"string\",\n      \"createdAt\": \"1985-05-07T20:16:39.342Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e45969b0-6d2d-4a57-9510-dbe05a8bf8dd",
+              "name": "Authentication required",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fleet"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "jobSite",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.unitedrentals.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "57fd0b6a-8f71-48ec-9738-98a61e2fa8fa",
+    "name": "United Rentals Total Control Equipment Fleet API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "United Rentals provides a broad selection of APIs to simplify the procure-to-pay lifecycle for equipment rentals. The Total Control platform enables integration with customer procurement and ERP systems via EDI, cXML, JSON, and flat-file formats. Capabilities include punch-out catalog ordering, rental reservations, fleet management, invoice management, and automated PO/bill pay workflows. United Rentals is the world's largest equipment rental company.\n\nContact Support:\n Name: United Rentals Integration Team",
+      "type": "text/plain"
+    }
+  }
+}

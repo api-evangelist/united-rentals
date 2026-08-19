@@ -1,0 +1,138 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "United Rentals Total Control Equipment API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Equipment",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Equipment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.unitedrentals.com/v1/equipment",
+            "params": [
+              {
+                "name": "category",
+                "value": "",
+                "type": "query",
+                "description": "Equipment category (e.g., aerial, earthmoving, power)"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Equipment type filter"
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "query",
+                "description": "Filter by nearest branch location"
+              },
+              {
+                "name": "available",
+                "value": "",
+                "type": "query",
+                "description": "Filter for available equipment only"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Browse the United Rentals equipment catalog. Returns available equipment by category, type, and location for punch-out catalog integration."
+        },
+        {
+          "info": {
+            "name": "Get Equipment Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.unitedrentals.com/v1/equipment/:equipmentId",
+            "params": [
+              {
+                "name": "equipmentId",
+                "value": "",
+                "type": "path",
+                "description": "United Rentals equipment identifier"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieve details for a specific piece of equipment including availability and pricing."
+        },
+        {
+          "info": {
+            "name": "Check Equipment Availability",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.unitedrentals.com/v1/equipment/:equipmentId/availability",
+            "params": [
+              {
+                "name": "equipmentId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "Rental start date"
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "Rental end date"
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "query",
+                "description": "Preferred branch location"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Check availability of equipment for a specific date range and branch location."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,1173 @@
+{
+  "item": [
+    {
+      "id": "a4fa924b-fd10-43f1-88ac-a5e366c03a2e",
+      "name": "Rentals",
+      "description": {
+        "content": "Rental reservations and orders",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "00acc36a-345a-4191-a625-3c6dc91a9082",
+          "name": "Create Rental Reservation",
+          "request": {
+            "name": "Create Rental Reservation",
+            "description": {
+              "content": "Create a new rental reservation order. Supports integration with customer procurement systems via purchase order. Processes ordering from within the customer's ERP environment through punch-out workflow.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rentals"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"equipmentId\": \"<string>\",\n  \"startDate\": \"<date>\",\n  \"endDate\": \"<date>\",\n  \"jobSite\": \"<string>\",\n  \"purchaseOrderNumber\": \"<string>\",\n  \"deliveryAddress\": \"<string>\",\n  \"notes\": \"<string>\",\n  \"branchId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e40265e0-cb80-4702-a983-3f24c9b6299b",
+              "name": "Rental reservation created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rentals"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"equipmentId\": \"<string>\",\n  \"startDate\": \"<date>\",\n  \"endDate\": \"<date>\",\n  \"jobSite\": \"<string>\",\n  \"purchaseOrderNumber\": \"<string>\",\n  \"deliveryAddress\": \"<string>\",\n  \"notes\": \"<string>\",\n  \"branchId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"rentalId\": \"string\",\n  \"status\": \"active\",\n  \"equipment\": {\n    \"equipmentId\": \"string\",\n    \"name\": \"string\",\n    \"category\": \"string\",\n    \"type\": \"string\",\n    \"manufacturer\": \"string\",\n    \"model\": \"string\",\n    \"specifications\": {\n      \"key_0\": \"string\",\n      \"key_1\": 785,\n      \"key_2\": 390.4833893679283,\n      \"key_3\": true\n    },\n    \"dailyRate\": 4624.132268813863,\n    \"weeklyRate\": 7256.585532489089,\n    \"monthlyRate\": 6971.060187727988,\n    \"available\": false,\n    \"nearestBranch\": \"string\"\n  },\n  \"startDate\": \"2010-01-25\",\n  \"endDate\": \"1984-11-07\",\n  \"returnDate\": \"1994-01-12\",\n  \"jobSite\": \"string\",\n  \"deliveryAddress\": \"string\",\n  \"purchaseOrderNumber\": \"string\",\n  \"totalCost\": 5356.640739327598,\n  \"branchId\": \"string\",\n  \"createdAt\": \"1996-10-29T05:23:09.226Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3b34fb58-9d32-42d5-a5d8-8e8cf3731615",
+              "name": "Invalid request parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rentals"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"equipmentId\": \"<string>\",\n  \"startDate\": \"<date>\",\n  \"endDate\": \"<date>\",\n  \"jobSite\": \"<string>\",\n  \"purchaseOrderNumber\": \"<string>\",\n  \"deliveryAddress\": \"<string>\",\n  \"notes\": \"<string>\",\n  \"branchId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f01ece86-06ac-413d-b7c4-29eea0c062a7",
+              "name": "Authentication required",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rentals"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"equipmentId\": \"<string>\",\n  \"startDate\": \"<date>\",\n  \"endDate\": \"<date>\",\n  \"jobSite\": \"<string>\",\n  \"purchaseOrderNumber\": \"<string>\",\n  \"deliveryAddress\": \"<string>\",\n  \"notes\": \"<string>\",\n  \"branchId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f7e37bc3-c4c9-456c-8e1a-493064a1203d",
+          "name": "List Rentals",
+          "request": {
+            "name": "List Rentals",
+            "description": {
+              "content": "Retrieve rental orders for the account. Supports fleet tracking and management.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rentals"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter by rental status"
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<date>"
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<date>"
+                },
+                {
+                  "disabled": false,
+                  "key": "jobSite",
+                  "value": "<string>",
+                  "description": "Filter by job site or project"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "d87f7e71-71e7-4b73-9409-169ae76285c5",
+              "name": "Rentals list returned",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rentals"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "jobSite",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"rentalId\": \"string\",\n    \"status\": \"pending\",\n    \"equipment\": {\n      \"equipmentId\": \"string\",\n      \"name\": \"string\",\n      \"category\": \"string\",\n      \"type\": \"string\",\n      \"manufacturer\": \"string\",\n      \"model\": \"string\",\n      \"specifications\": {\n        \"key_0\": 1856.0441045903942\n      },\n      \"dailyRate\": 2080.570930118155,\n      \"weeklyRate\": 8720.477644805353,\n      \"monthlyRate\": 4860.085806754652,\n      \"available\": false,\n      \"nearestBranch\": \"string\"\n    },\n    \"startDate\": \"2005-07-19\",\n    \"endDate\": \"1964-04-24\",\n    \"returnDate\": \"1961-08-27\",\n    \"jobSite\": \"string\",\n    \"deliveryAddress\": \"string\",\n    \"purchaseOrderNumber\": \"string\",\n    \"totalCost\": 5992.834250499543,\n    \"branchId\": \"string\",\n    \"createdAt\": \"1966-07-06T09:07:58.955Z\"\n  },\n  {\n    \"rentalId\": \"string\",\n    \"status\": \"cancelled\",\n    \"equipment\": {\n      \"equipmentId\": \"string\",\n      \"name\": \"string\",\n      \"category\": \"string\",\n      \"type\": \"string\",\n      \"manufacturer\": \"string\",\n      \"model\": \"string\",\n      \"specifications\": {\n        \"key_0\": \"string\",\n        \"key_1\": 7485.029436643541\n      },\n      \"dailyRate\": 9930.569322835543,\n      \"weeklyRate\": 3617.280104083842,\n      \"monthlyRate\": 5071.484463510061,\n      \"available\": true,\n      \"nearestBranch\": \"string\"\n    },\n    \"startDate\": \"2007-06-11\",\n    \"endDate\": \"1985-03-08\",\n    \"returnDate\": \"1947-09-23\",\n    \"jobSite\": \"string\",\n    \"deliveryAddress\": \"string\",\n    \"purchaseOrderNumber\": \"string\",\n    \"totalCost\": 5163.118330409884,\n    \"branchId\": \"string\",\n    \"createdAt\": \"1964-01-12T00:51:08.706Z\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "be577dd0-67fa-42f0-9852-19cc7767a06a",
+              "name": "Authentication required",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rentals"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "jobSite",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "22518049-5dd5-4a82-b21e-1398f7e32fd0",
+          "name": "Get Rental Details",
+          "request": {
+            "name": "Get Rental Details",
+            "description": {
+              "content": "Retrieve details for a specific rental order.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rentals",
+                ":rentalId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "rentalId",
+                  "description": "(Required) Rental order identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "4dbeb959-3905-4b3a-8818-749303dcd1e0",
+              "name": "Rental details returned",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rentals",
+                    ":rentalId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rentalId",
+                      "description": "(Required) Rental order identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"rentalId\": \"string\",\n  \"status\": \"active\",\n  \"equipment\": {\n    \"equipmentId\": \"string\",\n    \"name\": \"string\",\n    \"category\": \"string\",\n    \"type\": \"string\",\n    \"manufacturer\": \"string\",\n    \"model\": \"string\",\n    \"specifications\": {\n      \"key_0\": \"string\",\n      \"key_1\": 785,\n      \"key_2\": 390.4833893679283,\n      \"key_3\": true\n    },\n    \"dailyRate\": 4624.132268813863,\n    \"weeklyRate\": 7256.585532489089,\n    \"monthlyRate\": 6971.060187727988,\n    \"available\": false,\n    \"nearestBranch\": \"string\"\n  },\n  \"startDate\": \"2010-01-25\",\n  \"endDate\": \"1984-11-07\",\n  \"returnDate\": \"1994-01-12\",\n  \"jobSite\": \"string\",\n  \"deliveryAddress\": \"string\",\n  \"purchaseOrderNumber\": \"string\",\n  \"totalCost\": 5356.640739327598,\n  \"branchId\": \"string\",\n  \"createdAt\": \"1996-10-29T05:23:09.226Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0f965a1f-0f5e-4bfb-b9e2-7226d4dd0c5c",
+              "name": "Authentication required",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rentals",
+                    ":rentalId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rentalId",
+                      "description": "(Required) Rental order identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0f585a59-858f-4442-8712-2489ca4fd1fc",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rentals",
+                    ":rentalId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rentalId",
+                      "description": "(Required) Rental order identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "12da2363-9301-4e08-89a0-8f14766a6bae",
+          "name": "Extend Rental",
+          "request": {
+            "name": "Extend Rental",
+            "description": {
+              "content": "Extend the duration of an active rental.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rentals",
+                ":rentalId",
+                "extend"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "rentalId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"newEndDate\": \"<date>\",\n  \"reason\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6e52dc52-3722-4c9c-a165-6e8cbe3f1c4c",
+              "name": "Rental extended successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rentals",
+                    ":rentalId",
+                    "extend"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rentalId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"newEndDate\": \"<date>\",\n  \"reason\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"rentalId\": \"string\",\n  \"status\": \"active\",\n  \"equipment\": {\n    \"equipmentId\": \"string\",\n    \"name\": \"string\",\n    \"category\": \"string\",\n    \"type\": \"string\",\n    \"manufacturer\": \"string\",\n    \"model\": \"string\",\n    \"specifications\": {\n      \"key_0\": \"string\",\n      \"key_1\": 785,\n      \"key_2\": 390.4833893679283,\n      \"key_3\": true\n    },\n    \"dailyRate\": 4624.132268813863,\n    \"weeklyRate\": 7256.585532489089,\n    \"monthlyRate\": 6971.060187727988,\n    \"available\": false,\n    \"nearestBranch\": \"string\"\n  },\n  \"startDate\": \"2010-01-25\",\n  \"endDate\": \"1984-11-07\",\n  \"returnDate\": \"1994-01-12\",\n  \"jobSite\": \"string\",\n  \"deliveryAddress\": \"string\",\n  \"purchaseOrderNumber\": \"string\",\n  \"totalCost\": 5356.640739327598,\n  \"branchId\": \"string\",\n  \"createdAt\": \"1996-10-29T05:23:09.226Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7d00c62c-7603-4bd2-a87f-47b2277b8733",
+              "name": "Invalid request parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rentals",
+                    ":rentalId",
+                    "extend"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rentalId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"newEndDate\": \"<date>\",\n  \"reason\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "919cdfdf-78d1-4bec-a5b6-eada224cf09f",
+              "name": "Authentication required",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rentals",
+                    ":rentalId",
+                    "extend"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rentalId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"newEndDate\": \"<date>\",\n  \"reason\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f17a55c8-16ee-4ee7-92c4-eaa6501b2821",
+          "name": "Return Rental",
+          "request": {
+            "name": "Return Rental",
+            "description": {
+              "content": "Initiate return of equipment from an active rental.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rentals",
+                ":rentalId",
+                "return"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "rentalId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"returnDate\": \"<date>\",\n  \"condition\": \"<string>\",\n  \"notes\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "db85769f-a5bc-43ca-a946-d914430306f1",
+              "name": "Return initiated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rentals",
+                    ":rentalId",
+                    "return"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rentalId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"returnDate\": \"<date>\",\n  \"condition\": \"<string>\",\n  \"notes\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"rentalId\": \"string\",\n  \"status\": \"active\",\n  \"equipment\": {\n    \"equipmentId\": \"string\",\n    \"name\": \"string\",\n    \"category\": \"string\",\n    \"type\": \"string\",\n    \"manufacturer\": \"string\",\n    \"model\": \"string\",\n    \"specifications\": {\n      \"key_0\": \"string\",\n      \"key_1\": 785,\n      \"key_2\": 390.4833893679283,\n      \"key_3\": true\n    },\n    \"dailyRate\": 4624.132268813863,\n    \"weeklyRate\": 7256.585532489089,\n    \"monthlyRate\": 6971.060187727988,\n    \"available\": false,\n    \"nearestBranch\": \"string\"\n  },\n  \"startDate\": \"2010-01-25\",\n  \"endDate\": \"1984-11-07\",\n  \"returnDate\": \"1994-01-12\",\n  \"jobSite\": \"string\",\n  \"deliveryAddress\": \"string\",\n  \"purchaseOrderNumber\": \"string\",\n  \"totalCost\": 5356.640739327598,\n  \"branchId\": \"string\",\n  \"createdAt\": \"1996-10-29T05:23:09.226Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "28cfbe0a-3de7-4c94-829c-0b3f64fba846",
+              "name": "Invalid request parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rentals",
+                    ":rentalId",
+                    "return"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rentalId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"returnDate\": \"<date>\",\n  \"condition\": \"<string>\",\n  \"notes\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f7458d66-bd3a-47c8-8b4f-9c4f5256a58e",
+              "name": "Authentication required",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rentals",
+                    ":rentalId",
+                    "return"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rentalId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"returnDate\": \"<date>\",\n  \"condition\": \"<string>\",\n  \"notes\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.unitedrentals.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "a882e95f-c763-4794-a23f-f9d55d23d000",
+    "name": "United Total Control Equipment Rentals API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "United Rentals provides a broad selection of APIs to simplify the procure-to-pay lifecycle for equipment rentals. The Total Control platform enables integration with customer procurement and ERP systems via EDI, cXML, JSON, and flat-file formats. Capabilities include punch-out catalog ordering, rental reservations, fleet management, invoice management, and automated PO/bill pay workflows. United Rentals is the world's largest equipment rental company.\n\nContact Support:\n Name: United Rentals Integration Team",
+      "type": "text/plain"
+    }
+  }
+}
