@@ -112,6 +112,9 @@ apis:
   - type: Total Control Platform
     url: https://www.unitedrentals.com/services/online-services/total-control
 common:
+  - type: CapabilityMap
+    url: capabilities/united-rentals-capability-edges.yml
+    name: United Rentals Business Capability Map
   - type: AgenticAccess
     url: agentic-access/united-rentals-agentic-access.yml
   - type: DomainSecurity

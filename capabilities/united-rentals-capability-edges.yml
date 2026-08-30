@@ -1,0 +1,26 @@
+slug: united-rentals
+provider: United Rentals
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Manufacturing & Industrial
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 1
+edges:
+- tag: Invoices
+  spec_file: united-rentals-invoices-api-openapi.yml
+  capability_id: BC-200.20
+  capability_id_l1: BC-200
+  capability_name: Accounts Payable Management
+  confidence: 0.72
+  evidence: '"POST /invoices/{invoiceId}/pay payInvoice Pay Invoice"; description cites "invoice management,
+    and automated PO/bill pay workflows"'
+  reason: The API consumer is the renting customer retrieving and paying supplier invoices — accounts
+    payable / bill pay. Vendor-side receivables reading is possible but the stated PO/bill-pay framing
+    favours AP.
