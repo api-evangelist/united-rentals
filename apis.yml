@@ -90,6 +90,8 @@ apis:
   humanURL: https://www.unitedrentals.com/services/online-services/total-control/system-integration
   baseURL: https://api.unitedrentals.com/v1
   tags:
+  - Location
+  tags_raw:
   - Locations
   properties:
   - type: OpenAPI
