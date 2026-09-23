@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: United Rentals Total Control Equipment Invoices API
+  title: United Rentals Total Control Invoices API
   description: United Rentals provides a broad selection of APIs to simplify the procure-to-pay lifecycle for equipment rentals. The Total Control platform enables integration with customer procurement and ERP systems via EDI, cXML, JSON, and flat-file formats. Capabilities include punch-out catalog ordering, rental reservations, fleet management, invoice management, and automated PO/bill pay workflows. United Rentals is the world's largest equipment rental company.
   version: 1.0.0
   contact:
@@ -120,6 +120,12 @@ paths:
       - ApiKeyAuth: []
 components:
   responses:
+    BadRequest:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     Unauthorized:
       description: Authentication required
       content:
@@ -132,13 +138,23 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
+    PaymentResponse:
+      type: object
+      properties:
+        paymentId:
+          type: string
+        status:
+          type: string
+          enum:
+          - processed
+          - pending
+        amount:
+          type: number
+          format: double
+        processedAt:
+          type: string
+          format: date-time
     PaymentRequest:
       type: object
       required:
@@ -156,13 +172,6 @@ components:
           - check
         reference:
           type: string
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
     InvoiceLineItem:
       type: object
       properties:
@@ -176,22 +185,6 @@ components:
         amount:
           type: number
           format: double
-    PaymentResponse:
-      type: object
-      properties:
-        paymentId:
-          type: string
-        status:
-          type: string
-          enum:
-          - processed
-          - pending
-        amount:
-          type: number
-          format: double
-        processedAt:
-          type: string
-          format: date-time
     Invoice:
       type: object
       properties:
@@ -229,6 +222,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/InvoiceLineItem'
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

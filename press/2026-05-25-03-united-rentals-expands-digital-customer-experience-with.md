@@ -1,7 +1,9 @@
 ---
 title: United Rentals Expands Digital Customer Experience with ...
 url: https://www.businesswire.com/news/home/20260519107330/en/United-Rentals-Expands-Digital-Customer-Experience-with-Equipment-Agent-Launch-in-ChatGPT
-date: '2026-05-25'
+published: ''
+date_basis: harvested
+harvested: '2026-05-25'
 query: '"United Rentals" press release artificial intelligence'
 position: 3
 source: serpapi-google

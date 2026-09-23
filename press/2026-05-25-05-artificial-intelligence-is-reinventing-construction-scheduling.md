@@ -1,7 +1,9 @@
 ---
 title: Artificial Intelligence Is Reinventing Construction Scheduling
 url: https://www.unitedrentals.com/project-uptime/data/artificial-intelligence-reinventing-construction-scheduling
-date: '2026-05-25'
+published: ''
+date_basis: harvested
+harvested: '2026-05-25'
 query: '"United Rentals" press release artificial intelligence'
 position: 5
 source: serpapi-google

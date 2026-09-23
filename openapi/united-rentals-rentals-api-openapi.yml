@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: United Total Control Equipment Rentals API
+  title: United Total Control Rentals API
   description: United Rentals provides a broad selection of APIs to simplify the procure-to-pay lifecycle for equipment rentals. The Total Control platform enables integration with customer procurement and ERP systems via EDI, cXML, JSON, and flat-file formats. Capabilities include punch-out catalog ordering, rental reservations, fleet management, invoice management, and automated PO/bill pay workflows. United Rentals is the world's largest equipment rental company.
   version: 1.0.0
   contact:
@@ -177,32 +177,26 @@ paths:
       security:
       - ApiKeyAuth: []
 components:
+  responses:
+    BadRequest:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    RentalExtensionRequest:
-      type: object
-      required:
-      - newEndDate
-      properties:
-        newEndDate:
-          type: string
-          format: date
-          description: New return date
-        reason:
-          type: string
-    ReturnRequest:
-      type: object
-      properties:
-        returnDate:
-          type: string
-          format: date
-        condition:
-          type: string
-          enum:
-          - good
-          - damaged
-          - missing-parts
-        notes:
-          type: string
     Rental:
       type: object
       properties:
@@ -240,39 +234,6 @@ components:
         createdAt:
           type: string
           format: date-time
-    Equipment:
-      type: object
-      properties:
-        equipmentId:
-          type: string
-        name:
-          type: string
-        category:
-          type: string
-          description: Equipment category (aerial, earthmoving, power, etc.)
-        type:
-          type: string
-        manufacturer:
-          type: string
-        model:
-          type: string
-        specifications:
-          type: object
-          additionalProperties: true
-          description: Equipment-specific technical specifications
-        dailyRate:
-          type: number
-          format: double
-        weeklyRate:
-          type: number
-          format: double
-        monthlyRate:
-          type: number
-          format: double
-        available:
-          type: boolean
-        nearestBranch:
-          type: string
     Error:
       type: object
       properties:
@@ -309,25 +270,64 @@ components:
           type: string
         branchId:
           type: string
-  responses:
-    Unauthorized:
-      description: Authentication required
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    Equipment:
+      type: object
+      properties:
+        equipmentId:
+          type: string
+        name:
+          type: string
+        category:
+          type: string
+          description: Equipment category (aerial, earthmoving, power, etc.)
+        type:
+          type: string
+        manufacturer:
+          type: string
+        model:
+          type: string
+        specifications:
+          type: object
+          additionalProperties: true
+          description: Equipment-specific technical specifications
+        dailyRate:
+          type: number
+          format: double
+        weeklyRate:
+          type: number
+          format: double
+        monthlyRate:
+          type: number
+          format: double
+        available:
+          type: boolean
+        nearestBranch:
+          type: string
+    ReturnRequest:
+      type: object
+      properties:
+        returnDate:
+          type: string
+          format: date
+        condition:
+          type: string
+          enum:
+          - good
+          - damaged
+          - missing-parts
+        notes:
+          type: string
+    RentalExtensionRequest:
+      type: object
+      required:
+      - newEndDate
+      properties:
+        newEndDate:
+          type: string
+          format: date
+          description: New return date
+        reason:
+          type: string
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

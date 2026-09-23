@@ -1,7 +1,9 @@
 ---
 title: United Rentals Introduces AI-Powered Equipment Agent
 url: https://investors.unitedrentals.com/press-releases/press-releases-details/2026/United-Rentals-Introduces-AI-Powered-Equipment-Agent/default.aspx
-date: '2026-05-25'
+published: ''
+date_basis: harvested
+harvested: '2026-05-25'
 query: '"United Rentals" press release artificial intelligence'
 position: 2
 source: serpapi-google
