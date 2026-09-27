@@ -135,7 +135,45 @@ paths:
       security:
       - ApiKeyAuth: []
 components:
+  responses:
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    AvailabilityResponse:
+      type: object
+      properties:
+        equipmentId:
+          type: string
+        available:
+          type: boolean
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+        branchId:
+          type: string
+        estimatedPrice:
+          type: number
+          format: double
     EquipmentListResponse:
       type: object
       properties:
@@ -149,13 +187,6 @@ components:
           type: integer
         pageSize:
           type: integer
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
     Equipment:
       type: object
       properties:
@@ -189,37 +220,6 @@ components:
           type: boolean
         nearestBranch:
           type: string
-    AvailabilityResponse:
-      type: object
-      properties:
-        equipmentId:
-          type: string
-        available:
-          type: boolean
-        startDate:
-          type: string
-          format: date
-        endDate:
-          type: string
-          format: date
-        branchId:
-          type: string
-        estimatedPrice:
-          type: number
-          format: double
-  responses:
-    Unauthorized:
-      description: Authentication required
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

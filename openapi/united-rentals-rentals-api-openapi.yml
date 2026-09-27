@@ -177,26 +177,39 @@ paths:
       security:
       - ApiKeyAuth: []
 components:
-  responses:
-    BadRequest:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication required
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
+    RentalExtensionRequest:
+      type: object
+      required:
+      - newEndDate
+      properties:
+        newEndDate:
+          type: string
+          format: date
+          description: New return date
+        reason:
+          type: string
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    ReturnRequest:
+      type: object
+      properties:
+        returnDate:
+          type: string
+          format: date
+        condition:
+          type: string
+          enum:
+          - good
+          - damaged
+          - missing-parts
+        notes:
+          type: string
     Rental:
       type: object
       properties:
@@ -234,42 +247,6 @@ components:
         createdAt:
           type: string
           format: date-time
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-    RentalRequest:
-      type: object
-      required:
-      - equipmentId
-      - startDate
-      - endDate
-      - jobSite
-      - purchaseOrderNumber
-      properties:
-        equipmentId:
-          type: string
-        startDate:
-          type: string
-          format: date
-        endDate:
-          type: string
-          format: date
-        jobSite:
-          type: string
-          description: Job site or project name
-        deliveryAddress:
-          type: string
-        purchaseOrderNumber:
-          type: string
-          description: Customer PO number for ERP integration
-        notes:
-          type: string
-        branchId:
-          type: string
     Equipment:
       type: object
       properties:
@@ -303,31 +280,54 @@ components:
           type: boolean
         nearestBranch:
           type: string
-    ReturnRequest:
-      type: object
-      properties:
-        returnDate:
-          type: string
-          format: date
-        condition:
-          type: string
-          enum:
-          - good
-          - damaged
-          - missing-parts
-        notes:
-          type: string
-    RentalExtensionRequest:
+    RentalRequest:
       type: object
       required:
-      - newEndDate
+      - equipmentId
+      - startDate
+      - endDate
+      - jobSite
+      - purchaseOrderNumber
       properties:
-        newEndDate:
+        equipmentId:
+          type: string
+        startDate:
           type: string
           format: date
-          description: New return date
-        reason:
+        endDate:
           type: string
+          format: date
+        jobSite:
+          type: string
+          description: Job site or project name
+        deliveryAddress:
+          type: string
+        purchaseOrderNumber:
+          type: string
+          description: Customer PO number for ERP integration
+        notes:
+          type: string
+        branchId:
+          type: string
+  responses:
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
