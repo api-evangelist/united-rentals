@@ -149,13 +149,19 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
   schemas:
-    Error:
+    EquipmentListResponse:
       type: object
       properties:
-        code:
-          type: string
-        message:
-          type: string
+        equipment:
+          type: array
+          items:
+            $ref: '#/components/schemas/Equipment'
+        total:
+          type: integer
+        page:
+          type: integer
+        pageSize:
+          type: integer
     AvailabilityResponse:
       type: object
       properties:
@@ -174,19 +180,13 @@ components:
         estimatedPrice:
           type: number
           format: double
-    EquipmentListResponse:
+    Error:
       type: object
       properties:
-        equipment:
-          type: array
-          items:
-            $ref: '#/components/schemas/Equipment'
-        total:
-          type: integer
-        page:
-          type: integer
-        pageSize:
-          type: integer
+        code:
+          type: string
+        message:
+          type: string
     Equipment:
       type: object
       properties:

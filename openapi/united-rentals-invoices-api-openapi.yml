@@ -137,13 +137,22 @@ components:
           - check
         reference:
           type: string
-    Error:
+    PaymentResponse:
       type: object
       properties:
-        code:
+        paymentId:
           type: string
-        message:
+        status:
           type: string
+          enum:
+          - processed
+          - pending
+        amount:
+          type: number
+          format: double
+        processedAt:
+          type: string
+          format: date-time
     Invoice:
       type: object
       properties:
@@ -181,6 +190,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/InvoiceLineItem'
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
     InvoiceLineItem:
       type: object
       properties:
@@ -194,23 +210,13 @@ components:
         amount:
           type: number
           format: double
-    PaymentResponse:
-      type: object
-      properties:
-        paymentId:
-          type: string
-        status:
-          type: string
-          enum:
-          - processed
-          - pending
-        amount:
-          type: number
-          format: double
-        processedAt:
-          type: string
-          format: date-time
   responses:
+    BadRequest:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     NotFound:
       description: Resource not found
       content:
@@ -219,12 +225,6 @@ components:
             $ref: '#/components/schemas/Error'
     Unauthorized:
       description: Authentication required
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Invalid request parameters
       content:
         application/json:
           schema:

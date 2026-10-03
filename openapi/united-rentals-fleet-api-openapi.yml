@@ -48,6 +48,19 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
+    FleetResponse:
+      type: object
+      properties:
+        totalActive:
+          type: integer
+        totalIdle:
+          type: integer
+        totalOverdue:
+          type: integer
+        rentals:
+          type: array
+          items:
+            $ref: '#/components/schemas/Rental'
     Error:
       type: object
       properties:
@@ -125,19 +138,6 @@ components:
           type: boolean
         nearestBranch:
           type: string
-    FleetResponse:
-      type: object
-      properties:
-        totalActive:
-          type: integer
-        totalIdle:
-          type: integer
-        totalOverdue:
-          type: integer
-        rentals:
-          type: array
-          items:
-            $ref: '#/components/schemas/Rental'
   responses:
     Unauthorized:
       description: Authentication required
