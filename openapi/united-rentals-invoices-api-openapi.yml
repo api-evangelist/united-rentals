@@ -119,7 +119,62 @@ paths:
       security:
       - ApiKeyAuth: []
 components:
+  responses:
+    BadRequest:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
+    PaymentResponse:
+      type: object
+      properties:
+        paymentId:
+          type: string
+        status:
+          type: string
+          enum:
+          - processed
+          - pending
+        amount:
+          type: number
+          format: double
+        processedAt:
+          type: string
+          format: date-time
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    InvoiceLineItem:
+      type: object
+      properties:
+        description:
+          type: string
+        quantity:
+          type: number
+        unitPrice:
+          type: number
+          format: double
+        amount:
+          type: number
+          format: double
     PaymentRequest:
       type: object
       required:
@@ -137,22 +192,6 @@ components:
           - check
         reference:
           type: string
-    PaymentResponse:
-      type: object
-      properties:
-        paymentId:
-          type: string
-        status:
-          type: string
-          enum:
-          - processed
-          - pending
-        amount:
-          type: number
-          format: double
-        processedAt:
-          type: string
-          format: date-time
     Invoice:
       type: object
       properties:
@@ -190,45 +229,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/InvoiceLineItem'
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-    InvoiceLineItem:
-      type: object
-      properties:
-        description:
-          type: string
-        quantity:
-          type: number
-        unitPrice:
-          type: number
-          format: double
-        amount:
-          type: number
-          format: double
-  responses:
-    BadRequest:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication required
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

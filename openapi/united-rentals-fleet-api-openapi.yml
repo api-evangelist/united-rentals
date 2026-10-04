@@ -48,6 +48,39 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
+    Equipment:
+      type: object
+      properties:
+        equipmentId:
+          type: string
+        name:
+          type: string
+        category:
+          type: string
+          description: Equipment category (aerial, earthmoving, power, etc.)
+        type:
+          type: string
+        manufacturer:
+          type: string
+        model:
+          type: string
+        specifications:
+          type: object
+          additionalProperties: true
+          description: Equipment-specific technical specifications
+        dailyRate:
+          type: number
+          format: double
+        weeklyRate:
+          type: number
+          format: double
+        monthlyRate:
+          type: number
+          format: double
+        available:
+          type: boolean
+        nearestBranch:
+          type: string
     FleetResponse:
       type: object
       properties:
@@ -61,13 +94,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Rental'
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
     Rental:
       type: object
       properties:
@@ -105,38 +131,12 @@ components:
         createdAt:
           type: string
           format: date-time
-    Equipment:
+    Error:
       type: object
       properties:
-        equipmentId:
+        code:
           type: string
-        name:
-          type: string
-        category:
-          type: string
-          description: Equipment category (aerial, earthmoving, power, etc.)
-        type:
-          type: string
-        manufacturer:
-          type: string
-        model:
-          type: string
-        specifications:
-          type: object
-          additionalProperties: true
-          description: Equipment-specific technical specifications
-        dailyRate:
-          type: number
-          format: double
-        weeklyRate:
-          type: number
-          format: double
-        monthlyRate:
-          type: number
-          format: double
-        available:
-          type: boolean
-        nearestBranch:
+        message:
           type: string
   responses:
     Unauthorized:

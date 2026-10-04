@@ -197,6 +197,39 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
   schemas:
+    Equipment:
+      type: object
+      properties:
+        equipmentId:
+          type: string
+        name:
+          type: string
+        category:
+          type: string
+          description: Equipment category (aerial, earthmoving, power, etc.)
+        type:
+          type: string
+        manufacturer:
+          type: string
+        model:
+          type: string
+        specifications:
+          type: object
+          additionalProperties: true
+          description: Equipment-specific technical specifications
+        dailyRate:
+          type: number
+          format: double
+        weeklyRate:
+          type: number
+          format: double
+        monthlyRate:
+          type: number
+          format: double
+        available:
+          type: boolean
+        nearestBranch:
+          type: string
     ReturnRequest:
       type: object
       properties:
@@ -240,13 +273,6 @@ components:
           type: string
         branchId:
           type: string
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
     Rental:
       type: object
       properties:
@@ -284,6 +310,13 @@ components:
         createdAt:
           type: string
           format: date-time
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
     RentalExtensionRequest:
       type: object
       required:
@@ -294,39 +327,6 @@ components:
           format: date
           description: New return date
         reason:
-          type: string
-    Equipment:
-      type: object
-      properties:
-        equipmentId:
-          type: string
-        name:
-          type: string
-        category:
-          type: string
-          description: Equipment category (aerial, earthmoving, power, etc.)
-        type:
-          type: string
-        manufacturer:
-          type: string
-        model:
-          type: string
-        specifications:
-          type: object
-          additionalProperties: true
-          description: Equipment-specific technical specifications
-        dailyRate:
-          type: number
-          format: double
-        weeklyRate:
-          type: number
-          format: double
-        monthlyRate:
-          type: number
-          format: double
-        available:
-          type: boolean
-        nearestBranch:
           type: string
   securitySchemes:
     ApiKeyAuth:

@@ -51,14 +51,14 @@ paths:
       security:
       - ApiKeyAuth: []
 components:
+  responses:
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
     Location:
       type: object
       properties:
@@ -82,13 +82,13 @@ components:
           type: number
           format: double
           description: Distance in miles from queried zip code
-  responses:
-    Unauthorized:
-      description: Authentication required
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
