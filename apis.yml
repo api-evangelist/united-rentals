@@ -115,6 +115,12 @@ apis:
   - type: Total Control Platform
     url: https://www.unitedrentals.com/services/online-services/total-control
 common:
+- type: Plans
+  url: plans/united-rentals-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/united-rentals-rate-limits.yml
+- type: FinOps
+  url: finops/united-rentals-finops.yml
 - url: https://www.unitedrentals.com/resources/articles
   type: Blog
 - type: CapabilityMap
