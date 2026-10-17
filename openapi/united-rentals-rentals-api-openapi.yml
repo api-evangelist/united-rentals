@@ -177,25 +177,6 @@ paths:
       security:
       - ApiKeyAuth: []
 components:
-  responses:
-    BadRequest:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication required
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
     Equipment:
       type: object
@@ -230,19 +211,12 @@ components:
           type: boolean
         nearestBranch:
           type: string
-    ReturnRequest:
+    Error:
       type: object
       properties:
-        returnDate:
+        code:
           type: string
-          format: date
-        condition:
-          type: string
-          enum:
-          - good
-          - damaged
-          - missing-parts
-        notes:
+        message:
           type: string
     RentalRequest:
       type: object
@@ -310,13 +284,6 @@ components:
         createdAt:
           type: string
           format: date-time
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
     RentalExtensionRequest:
       type: object
       required:
@@ -328,6 +295,39 @@ components:
           description: New return date
         reason:
           type: string
+    ReturnRequest:
+      type: object
+      properties:
+        returnDate:
+          type: string
+          format: date
+        condition:
+          type: string
+          enum:
+          - good
+          - damaged
+          - missing-parts
+        notes:
+          type: string
+  responses:
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

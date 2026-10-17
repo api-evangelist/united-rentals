@@ -51,13 +51,6 @@ paths:
       security:
       - ApiKeyAuth: []
 components:
-  responses:
-    Unauthorized:
-      description: Authentication required
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
     Location:
       type: object
@@ -89,6 +82,13 @@ components:
           type: string
         message:
           type: string
+  responses:
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
